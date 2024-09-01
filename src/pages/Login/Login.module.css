@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    padding: 0;
+    justify-items: center;
+    grid-template-areas:
+    "empty"
+    "contents"
+    "more_contents"
+    "footer";
+    grid-template-columns: 100%;
+   
+}
