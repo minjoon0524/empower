@@ -1,3 +1,4 @@
+import JoinPage from "../pages/Join/JoinPage";
 import LoginPage from "../pages/Login/LoginPage";
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -5,11 +6,11 @@ const root = createBrowserRouter([
   {
     path: "login",
     element: <LoginPage />,
-  // },
-  // {
-  //   path: "about",
-  //   element: <AboutPage />,
-  // },
+  },
+  {
+    path: "join",
+    element: <JoinPage />,
+  },
   // {
   //   path: "todo",
   //   element: <IndexPage />,
@@ -18,7 +19,7 @@ const root = createBrowserRouter([
   // {
   //   path: "member",
   //   children: memberRouter()
-     }
+     
 ]);
 
 export default root;
