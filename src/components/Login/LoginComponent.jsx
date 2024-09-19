@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import style from "./LoginComponent.module.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../slices/loginSlice";
 
 const initState = {
   employeeNumber: "",
@@ -7,12 +10,34 @@ const initState = {
 };
 
 const LoginComponent = () => {
+  // 로그인을 위한 useState
+  const [loginParam, setLoginParam] = useState({ ...initState });
+
+  // 로그인 버튼을 눌었을 때 전체 상태가 바뀌게 하기위해 사용
+  //useDispatch에 들어갈 값은 유지해야할 데이터 값
+  const disPatch = useDispatch();
+
+  const handleChange = (e) => {
+    loginParam[e.target.name] = e.target.value;
+    setLoginParam({ ...loginParam });
+  };
+
+  const handleClickLogin = (e) => {
+    disPatch(login(loginParam));
+  };
+
   // 비밀번호 표시를 위한 useState
   const [showPassword, setShowPassword] = useState(false);
 
   // 비밀번호 표시 상태를 토글
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const navigate = useNavigate();
+
+  const goToJoin = () => {
+    navigate("/join");
   };
 
   return (
@@ -31,6 +56,9 @@ const LoginComponent = () => {
               <input
                 type="text"
                 className={style.input}
+                name="employeeNumber"
+                onChange={handleChange}
+                value={loginParam.employeeNumber}
                 placeholder="사번"
               />
             </div>
@@ -39,6 +67,9 @@ const LoginComponent = () => {
               <input
                 type={showPassword ? "text" : "password"} // 상태에 따라 필드 타입 변경
                 className={style.input}
+                name="pw"
+                onChange={handleChange}
+                value={loginParam.pw}
                 placeholder="비밀번호"
               />
             </div>
@@ -52,8 +83,12 @@ const LoginComponent = () => {
                 비밀번호 보기
               </label>
             </div>
-            <button className={style.btn_submit}>로그인</button>
-            <button className={style.btn_submit}>회원가입</button>
+            <button className={style.btn_submit} onClick={handleClickLogin}>
+              로그인
+            </button>
+            <button className={style.btn_submit} onClick={goToJoin}>
+              회원가입
+            </button>
           </div>
         </div>
       </div>
