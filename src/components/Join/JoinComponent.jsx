@@ -1,6 +1,13 @@
 import React from 'react'
 import style from "./JoinComponent.module.css"
+import { useNavigate } from 'react-router-dom'
 const JoinComponent = () => {
+  const navigate=useNavigate();
+
+  const goToLogin=()=>{
+    navigate('/login');
+  }
+
   return (
     <div className={style.container}>
     <div className={style.contents}>
@@ -62,7 +69,7 @@ const JoinComponent = () => {
     
           <button className={style.btn_submit}>가입요청</button>
        
-       <div className={style.back_login}>로그인 페이지로 돌아가시겠어요?</div>
+       <div className={style.back_login} onClick={goToLogin}>로그인 페이지로 돌아가시겠어요?</div>
         </div>
       </div>
     </div>
