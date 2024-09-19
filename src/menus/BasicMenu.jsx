@@ -1,7 +1,13 @@
 import React from "react";
 import style from "./Menu.module.css";
+import { useSelector } from "react-redux";
 const BasicMenu = () => {
-  return (
+// BasicMenu가 관심있는 것은 로그인 됐는지 안 됐는지에 대한 상태
+//=>로그인 Slices의 상태
+
+const loginState = useSelector((state) => state.loginSlice);
+console.log("loginState Test---------",loginState)  
+return (
     <nav className={style.container}>
       <div className={style.nav_item}>
         <a className={style.title}>Empower</a>
