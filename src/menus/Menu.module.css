@@ -28,6 +28,7 @@ li {
   font-size: 21px;
   font-weight: 400;
   cursor: pointer;
+
 }
 
 .profile_container {
@@ -44,6 +45,21 @@ li {
   margin-top: 5px;
   margin-right: 15px;
   /* border: 1px solid red; */
+}
+
+.user_name {
+  margin-right: 10px; /* 원하는 간격으로 조정 */
+}
+
+
+.user_area{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+.logout_button{
+cursor: pointer;
 }
 
 .profile_thumbnail {
