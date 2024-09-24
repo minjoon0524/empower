@@ -12,6 +12,7 @@ export const loginPost = async (loginParam) => {
   form.append("password", loginParam.pw);
 
   const res = await axios.post(`${host}/login`, form, header);
-
+  console.log("---------------------------- 데이터 확인")
+  console.log(res.data)
   return res.data;
 };

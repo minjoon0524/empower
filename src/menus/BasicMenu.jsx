@@ -3,15 +3,17 @@ import style from "./Menu.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/loginSlice";
 import { useNavigate } from "react-router-dom";
+import useCustomLogin from "../hooks/useCustomLogin";
 const BasicMenu = () => {
   // BasicMenu가 관심있는 것은 로그인 됐는지 안 됐는지에 대한 상태
   //=>로그인 Slices의 상태
   const disPatch = useDispatch();
   const navigate=useNavigate();
-  const loginState = useSelector((state) => state.loginSlice);
+  const {loginState,doLogout}=useCustomLogin();
+  //const loginState = useSelector((state) => state.loginSlice);
   const handleClickLogout = (event) => {
     event.preventDefault(); // 기본 동작 방지
-    disPatch(logout());
+    doLogout()
     navigate('/login')
   };
   console.log("loginState Test---------", loginState);
@@ -31,7 +33,7 @@ const BasicMenu = () => {
             </button>
           </div>
           <div className={style.user_area}>
-              <span className={style.user_name}>개발1팀 홍길동</span>
+              <span className={style.user_name}>{loginState.department}{" "}{loginState.name}</span>
               <a className={style.logout_button} onClick={handleClickLogout}>로그아웃</a>
             </div>
 
