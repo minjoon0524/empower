@@ -1,0 +1,28 @@
+.main_container{
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    right: 0;
+    left: 250px;
+    padding-top: 10px;
+    /* padding-top: 60; */
+}
+
+.main_header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 60px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    
+}
+
+.main_title{
+
+    font-weight: 600;
+    font-size: 18px;
+     color: #707070;
+}
+

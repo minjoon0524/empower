@@ -1,17 +1,25 @@
-import React from 'react'
-import BasicMenu from '../menus/BasicMenu'
-import style from './BasicLayout.module.css'
-import CategoryMenu from '../menus/CategoryMenu'
+import React from "react";
+import BasicMenu from "../menus/BasicMenu";
+import style from "./BasicLayout.module.css";
+import CategoryMenu from "../menus/CategoryMenu";
 
-const BasicLayout = () => {
+const BasicLayout = ({ children,title }) => {
   return (
     <div>
-      <BasicMenu/>
+      <BasicMenu />
       <div>
-      <CategoryMenu/>
+        <CategoryMenu />
       </div>
+      <main className={style.main_container}>
+        {/* title */}
+        <header className={style.main_header}><h3 className={style.main_title}>{title}</h3></header>
+       
+        
+        {children}
+        <div ></div>
+      </main>
     </div>
-  )
-}
+  );
+};
 
-export default BasicLayout
+export default BasicLayout;
