@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import style from "./Menu.module.css";
 const CategoryMenu = () => {
   return (
@@ -13,9 +14,13 @@ const CategoryMenu = () => {
               </a>
               <ul className={style.sub_menu}>
                 <li class="">
-                  <a data-lwds-atom="true" className={style.sub_item} href="#">
+                  <Link
+                    to="/search"
+                    data-lwds-atom="true"
+                    className={style.sub_item}
+                  >
                     직원조회
-                  </a>
+                  </Link>
                 </li>
                 <li class="">
                   <a data-lwds-atom="true" className={style.sub_item} href="#">
