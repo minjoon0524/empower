@@ -1,8 +1,8 @@
 import MainPage from "../pages/Main/MainPage";
 import JoinPage from "../pages/Join/JoinPage";
 import LoginPage from "../pages/Login/LoginPage";
-
 import ApprovePage from './../pages/Approve/ApprovePage';
+import MemberSearchPage from "../pages/MemberSearch/MemberSearchPage";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -12,7 +12,7 @@ const root = createBrowserRouter([
     element: <MainPage />,
   },
   {
-    path: "login",
+    path: "/",
     element: <LoginPage />,
   },
   {
@@ -23,6 +23,10 @@ const root = createBrowserRouter([
   {
     path: "approve",
     element: <ApprovePage />,
+  },
+  {
+    path: "search",
+    element: <MemberSearchPage />,
   },
   // {
   //   path: "todo",
