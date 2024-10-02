@@ -1,4 +1,6 @@
 import axios from "axios";
+import jwtAxios from "./../util/jwtUtil";
+import { useState } from "react";
 
 const API_SERVER_HOST = `http://localhost:80`;
 
@@ -12,7 +14,18 @@ export const loginPost = async (loginParam) => {
   form.append("password", loginParam.pw);
 
   const res = await axios.post(`${host}/login`, form, header);
-  console.log("---------------------------- 데이터 확인")
-  console.log(res.data)
+  console.log("---------------------------- 데이터 확인");
+  console.log(res.data);
   return res.data;
+};
+
+// 회원가입 된 MemberList를 가져오기 위한 API
+export const getMemberList = async (pageParam) => {
+  const { page, size ,searchTerm, searchField} = pageParam;
+
+
+    const res = await jwtAxios.get(`${API_SERVER_HOST}/member/list`,{ params: { page, size,term: searchTerm, option: searchField } });
+    return res.data;
+
+
 };
