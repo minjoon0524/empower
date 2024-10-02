@@ -3,7 +3,7 @@ import BasicLayout from '../../layouts/BasicLayout'
 import MemberSearchComponent from '../../components/Main/MemberSearchComponent/MemberSearchComponent'
 
 const MemberSearchPage = () => {
-    const title= "인사조회"
+    const title= "인적사항 관리"
     return (
       <BasicLayout title={title}>
        <MemberSearchComponent/>
