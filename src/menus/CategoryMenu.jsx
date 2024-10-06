@@ -15,7 +15,7 @@ const CategoryMenu = () => {
               <ul className={style.sub_menu}>
                 <li class="">
                   <Link
-                    to="/search"
+                    to="/member/search"
                     data-lwds-atom="true"
                     className={style.sub_item}
                   >
