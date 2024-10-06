@@ -21,11 +21,17 @@ export const loginPost = async (loginParam) => {
 
 // 회원가입 된 MemberList를 가져오기 위한 API
 export const getMemberList = async (pageParam) => {
-  const { page, size ,searchTerm, searchField} = pageParam;
+  const { page, size, searchTerm, searchField } = pageParam;
 
-
-    const res = await jwtAxios.get(`${API_SERVER_HOST}/member/list`,{ params: { page, size,term: searchTerm, option: searchField } });
+  try {
+    const res = await jwtAxios.get(`${API_SERVER_HOST}/member/list`, {
+      params: { page, size, term: searchTerm, option: searchField },
+    });
     return res.data;
+  } catch (error) {
+    console.error("멤버 목록 API 오류:", error);
+    throw error; // 오류를 다시 던져서 호출하는 곳에서 처리
+  }
 
 
 };

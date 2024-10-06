@@ -20,21 +20,25 @@ const initState = {
 const MemberSearchComponent = () => {
   const { page, size, refresh, moveToList } = useCustomMove();
   const [serverData, setServerData] = useState(initState);
-  const [searchTerm, setSearchTerm] = useState(""); // 검색어 useState
-  const [searchField, setSearchField] = useState("name"); // 검색 Option State 
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어
+  const [searchField, setSearchField] = useState("name"); // 검색 옵션
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-
 
   useEffect(() => {
     fetchMembers();
   }, [page, size, refresh]);
 
-  const fetchMembers = () => {
-    setIsLoading(true); // 데이터 요청 시작 시 로딩 상태 true
-    getMemberList({ page, size, searchTerm, searchField }).then((data) => {
+  const fetchMembers = async () => {
+    setIsLoading(true); // 로딩 시작
+    try {
+      const data = await getMemberList({ page, size, searchTerm, searchField });
       setServerData(data);
-      setIsLoading(false); // 데이터 요청 시작 시 로딩 상태 true
-    });
+    } catch (error) {
+      console.error("회원 목록 가져오기 오류:", error);
+      // 여기서 추가적인 오류 처리 로직을 구현할 수 있습니다.
+    } finally {
+      setIsLoading(false); // 로딩 종료
+    }
   };
 
   const handlePageClick = ({ selected }) => {
@@ -42,8 +46,7 @@ const MemberSearchComponent = () => {
   };
 
   const handleSearch = () => {
-   
-    fetchMembers(); // 검색어에 따라 멤버 목록을 새로 가져옴
+    fetchMembers(); // 검색어에 따라 멤버 목록 새로 가져옴
   };
 
   return (
@@ -54,8 +57,8 @@ const MemberSearchComponent = () => {
         </div>
 
         <div className={style.search_item}>
-          <select 
-            name="search" 
+          <select
+            name="search"
             className={style.pl}
             value={searchField}
             onChange={(e) => setSearchField(e.target.value)} // 검색 필드 변경
@@ -67,20 +70,25 @@ const MemberSearchComponent = () => {
             <option value="tel">전화번호</option>
           </select>
           <div className={style.search_item}>
-            <input 
-              type="text" 
-              className={style.member_input} 
+            <input
+              type="text"
+              className={style.member_input}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)} // 검색어 변경
             />
           </div>
           <div>
-            <a className={style.search_btn} onClick={handleSearch}>검색</a> {/* 검색 버튼 클릭 시 검색 */}
+            <a className={style.search_btn} onClick={handleSearch}>
+              검색
+            </a>{" "}
+            {/* 검색 버튼 클릭 시 검색 */}
           </div>
         </div>
       </div>
       {isLoading ? ( // 로딩 상태일 때 표시할 UI
-        <div className={style.loading}><span class="loader"></span></div>
+        <div className={style.loading}>
+          <span className="loader"></span>
+        </div>
       ) : (
         <>
           <table>
