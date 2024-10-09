@@ -1,7 +1,8 @@
 import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
-export const setCookie = (name, value, days = 1) => {
+export const setCookie = (name, value, days) => {
+    console.log("----------setCookies 보관기한 테스트------------", days)
     const expires = new Date();
     expires.setUTCDate(expires.getUTCDate() + days); //보관기한
     return cookies.set(name, value, { expires: expires, path: "/" });
