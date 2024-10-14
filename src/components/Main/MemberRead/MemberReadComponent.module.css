@@ -1,19 +1,127 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, helvetica,
+    "Apple SD Gothic Neo", sans-serif;
+}
+
+.info_title {
+  position: relative;
+}
+
+.myinfo_area {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.myinfo_area .myphoto img {
+  box-shadow: 0 3px 6px 0 rgba(29, 34, 53, 0.08);
+  border-radius: 50%;
+  vertical-align: top;
+  margin-right: 10px;
+}
+
+.myinfo_area .myaccount .myname .name_text {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: -0.63px;
+  color: #1e1e23;
+  word-break: break-all;
+}
+
+.myinfo_area .myaccount .myaddress {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: normal;
+  color: #848896;
+  word-break: break-all;
+}
+
+.myprofile .subindex_row {
+  border-top: 1px solid rgba(220, 227, 233, 0.8);
+}
+
+.subindex_row .row_item {
+  padding: 12px 0 12px 30px;
+}
+.row_item {
+  text-align: start;
+}
+.row_item .item_text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.8px;
+  color: #303038;
+  word-break: break-all;
+}
+
+.subindex_box {
+  padding: 0 17px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+  border: solid 1px #e3e9ed;
+  background-color: #fff;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+.subindex_row .row_item {
+  padding: 12px 0 12px 30px;
+}
+
+.bottom_line {
+  border-bottom: solid 1px #e3e9ed;
+}
+
+.icon {
+  width: 20px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.member_submit_btn_area {
+ 
+  padding: 0 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  /* margin-bottom: 100px; */
+}
+
+.btn_edit {
+  min-width: 100px;
+  margin: 5px 10px;
+  height: 40px;
+  padding: 2px 9px 3px;
+  border-radius: 4px;
+  border: solid 1px #dbdde4;
+  background-color: #f6f6f8;
+  text-align: center;
+  cursor: pointer;
+}
+
+.subindex_box2{
+  padding: 0 17px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 10px 0 rgba(72, 75, 108, 0.08);
+  border: solid 1px #e3e9ed;
+  background-color: #fff;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+/* 수정 진행중  */
 .memberCard {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .memberInfo {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .label {
-    font-weight: bold;
-    min-width: 100px;
-  }
+  padding: 16px 16px 30px 16px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+
+  max-width: 700px;
+  margin: 40px auto;
+}
