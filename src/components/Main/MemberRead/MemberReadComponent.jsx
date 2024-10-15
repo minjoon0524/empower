@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getMember } from "../../../api/memberApi";
+import {deleteMember, getMember} from "../../../api/memberApi";
 import styles from "./MemberReadComponent.module.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faCalendarDays, faEnvelope, faLocationDot, faPhone, faRankingStar } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBuilding,
+  faCalendarDays,
+  faEnvelope,
+  faLocationDot,
+  faPhone,
+  faRankingStar,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+import useCustomMove from "../../../hooks/useCustomMove";
 
 const initState = {
   eid: "",
@@ -19,6 +26,24 @@ const initState = {
 
 const MemberReadComponent = ({ eid }) => {
   const [member, setMember] = useState(initState);
+
+  const navigate = useNavigate();
+  const {moveToList}=useCustomMove()
+
+  const goToModify = () => {
+    navigate(`/member/modify/${member.eid}`);
+  };
+
+  const handleClickDelete = () => { //버튼 클릭시
+
+    deleteMember(eid).then( data => {
+      console.log("delete result: " + data)
+      moveToList()
+    })
+    alert("삭제되었습니다.");
+
+
+  }
 
   useEffect(() => {
     getMember(eid).then((data) => {
@@ -49,7 +74,6 @@ const MemberReadComponent = ({ eid }) => {
               <div className={styles.myaccount}>
                 <div className={styles.myname}>
                   <div className={styles.name_text}>{member.name}</div>
-          
                 </div>
                 <div className={styles.myaddress}>{member.eid}</div>
               </div>
@@ -63,19 +87,35 @@ const MemberReadComponent = ({ eid }) => {
         <ul className={styles.subindex_row}>
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}><FontAwesomeIcon className={styles.icon} icon={faBuilding} />부서 : </span>
+              <span className={styles.item_text}>
+                <FontAwesomeIcon className={styles.icon} icon={faBuilding} />
+                부서 :{" "}
+              </span>
               <span className={styles.item_text}>{member.department}</span>
             </div>
           </li>
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}><FontAwesomeIcon className={styles.icon}v icon={faRankingStar} />직위 : </span>
+              <span className={styles.item_text}>
+                <FontAwesomeIcon
+                  className={styles.icon}
+                  v
+                  icon={faRankingStar}
+                />
+                직위 :{" "}
+              </span>
               <span className={styles.item_text}>{member.position}</span>
             </div>
           </li>
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}><FontAwesomeIcon  className={styles.icon} icon={faCalendarDays} />입사일 : </span>
+              <span className={styles.item_text}>
+                <FontAwesomeIcon
+                  className={styles.icon}
+                  icon={faCalendarDays}
+                />
+                입사일 :{" "}
+              </span>
               <span className={styles.item_text}>{member.hireDate}</span>
             </div>
           </li>
@@ -87,33 +127,41 @@ const MemberReadComponent = ({ eid }) => {
         <ul className={styles.subindex_row}>
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}> <FontAwesomeIcon className={styles.icon} icon={faPhone} />휴대전화 : </span>
+              <span className={styles.item_text}>
+                {" "}
+                <FontAwesomeIcon className={styles.icon} icon={faPhone} />
+                휴대전화 :{" "}
+              </span>
               <span className={styles.item_text}>{member.phone}</span>
             </div>
           </li>
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}><FontAwesomeIcon className={styles.icon} icon={faEnvelope} />이메일 : </span>
+              <span className={styles.item_text}>
+                <FontAwesomeIcon className={styles.icon} icon={faEnvelope} />
+                이메일 :{" "}
+              </span>
               <span className={styles.item_text}>{member.email}</span>
             </div>
           </li>
 
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
-              <span className={styles.item_text}><FontAwesomeIcon className={styles.icon} icon={faLocationDot} />주소 : </span>
+              <span className={styles.item_text}>
+                <FontAwesomeIcon className={styles.icon} icon={faLocationDot} />
+                주소 :{" "}
+              </span>
               <span className={styles.item_text}>{member.address}</span>
             </div>
           </li>
         </ul>
       </div>
 
-
-
       <div className={styles.member_submit_btn_area}>
-        
-      <button className={styles.btn_edit}><Link to={`/member/modify/${member.eid}`}>회원 수정</Link></button>
-            <button className={styles.btn_edit}>회원 삭제</button>
-        
+        <button onClick={goToModify} className={styles.btn_edit}>
+            회원 수정
+        </button>
+        <button className={styles.btn_edit} onClick={handleClickDelete}>회원 삭제</button>
       </div>
     </div>
   );
