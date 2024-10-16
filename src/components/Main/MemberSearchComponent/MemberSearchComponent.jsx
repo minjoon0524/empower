@@ -3,6 +3,7 @@ import style from "./MemberSearchComponent.module.css";
 import useCustomMove from "../../../hooks/useCustomMove";
 import { getMemberList } from "../../../api/memberApi";
 import ReactPaginate from "react-paginate";
+import JoinComponent from "../../Join/JoinComponent"; // JoinComponent 임포트
 
 const initState = {
   dtoList: [],
@@ -18,26 +19,29 @@ const initState = {
 };
 
 const MemberSearchComponent = () => {
-  const { page, size, refresh, moveToList } = useCustomMove();
+  const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
   const [serverData, setServerData] = useState(initState);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchField, setSearchField] = useState("name"); // 검색 옵션
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+  const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 상태 추가
 
   useEffect(() => {
     fetchMembers();
   }, [page, size, refresh]);
 
   const fetchMembers = async () => {
-    setIsLoading(true); // 로딩 시작
     try {
       const data = await getMemberList({ page, size, searchTerm, searchField });
       setServerData(data);
     } catch (error) {
-      console.error("회원 목록 가져오기 오류:", error);
-      // 여기서 추가적인 오류 처리 로직을 구현할 수 있습니다.
+      if (error.response && error.response.data.error === "ERROR_ACCESS_TOKEN") {
+        alert("액세스 토큰이 만료되었습니다. 다시 로그인 해주세요.");
+      } else {
+        console.error("회원 목록 가져오기 오류:", error);
+      }
     } finally {
-      setIsLoading(false); // 로딩 종료
+      // any necessary cleanup
     }
   };
 
@@ -49,11 +53,16 @@ const MemberSearchComponent = () => {
     fetchMembers(); // 검색어에 따라 멤버 목록 새로 가져옴
   };
 
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+
   return (
     <div className={style.member_search_area}>
       <div className={style.search_form}>
         <div className={style.search_item}>
-          <a className={style.add_person_btn}>사원추가</a>
+          <a className={style.add_person_btn} onClick={openModal}>
+            사원추가
+          </a>
         </div>
 
         <div className={style.search_item}>
@@ -85,7 +94,8 @@ const MemberSearchComponent = () => {
           </div>
         </div>
       </div>
-      {isLoading ? ( // 로딩 상태일 때 표시할 UI
+
+      {isLoading ? (
         <div className={style.loading}>
           <span className="loader"></span>
         </div>
@@ -104,7 +114,7 @@ const MemberSearchComponent = () => {
             </thead>
             <tbody>
               {serverData.dtoList.map((member) => (
-                <tr key={member.eid}>
+                <tr key={member.eid} onClick={() => moveToRead(member.eid)}>
                   <td>{member.name}</td>
                   <td>{member.department}</td>
                   <td>{member.position}</td>
@@ -139,6 +149,8 @@ const MemberSearchComponent = () => {
           />
         </>
       )}
+
+      <JoinComponent isOpen={modalIsOpen} onRequestClose={closeModal} />
     </div>
   );
 };
