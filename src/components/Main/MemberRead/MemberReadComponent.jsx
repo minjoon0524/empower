@@ -10,7 +10,7 @@ import {
   faPhone,
   faRankingStar,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import useCustomMove from "../../../hooks/useCustomMove";
 
 const initState = {
