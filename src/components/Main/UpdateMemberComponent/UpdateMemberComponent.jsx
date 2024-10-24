@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { modifyMember, getMember } from "../../../api/memberApi";
 import styles from "./UpdateMemberComponent.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useCustomMove from "../../../hooks/useCustomMove";
 import {
   faBuilding,
   faCalendarDays,
@@ -29,6 +30,10 @@ const UpdateMemberComponent = ({ eid }) => {
   const [member, setMember] = useState(initState);
   const [result, setResult] = useState("");
   const loginInfo = useSelector((state) => state.loginSlice);
+  const { moveToList } = useCustomMove();
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const uploadRef = useRef();
 
   useEffect(() => {
     getMember(eid).then((data) => {
@@ -37,18 +42,31 @@ const UpdateMemberComponent = ({ eid }) => {
   }, [eid]);
 
   const handleChange = (e) => {
-    member[e.target.name] = e.target.value;
-    setMember({ ...member });
-    console.log(member);
+    setMember({ ...member, [e.target.name]: e.target.value });
+    console.log(member)
   };
 
   const handleModify = () => {
-    modifyMember(member).then((result) => {
+    const file = uploadRef.current.files[0]; // 선택된 파일 가져오기
+    console.log(file)
+    modifyMember(member.eid, member, file).then((result) => {
       setResult("수정되었습니다.");
       alert("수정되었습니다.");
-      // 수정 후 필요한 작업 (예: 다른 페이지로 이동)
-      // navigate("/memberdetail");
+      console.log(result)
+      moveToList();
     });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        // member 객체에 프로필 이미지 정보를 저장할 필요는 없음
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -62,10 +80,18 @@ const UpdateMemberComponent = ({ eid }) => {
             <li>
               <div className={styles.myphoto}>
                 <img
-                  src="https://static.nid.naver.com/images/web/user/default.png"
+         
+                    src={`http://localhost/member/profile/${member.profileImagePath}`}
+             
                   width="56"
                   height="56"
                   alt="프로필 이미지"
+                />
+                <input
+                  type={"file"}
+                  ref={uploadRef}
+                  onChange={handleImageChange}
+                  className={styles.imageInput}
                 />
               </div>
             </li>
