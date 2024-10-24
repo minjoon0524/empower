@@ -15,11 +15,33 @@ body {
     padding: 12px 0;
   }
   
-  .myinfo_area .myphoto img {
+  .myphoto {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .myphoto img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .myphoto img {
     box-shadow: 0 3px 6px 0 rgba(29, 34, 53, 0.08);
     border-radius: 50%;
     vertical-align: top;
     margin-right: 10px;
+  }
+  
+  .imageInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
   }
   
   .myinfo_area .myaccount .myname .name_text {
