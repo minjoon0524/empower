@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {deleteMember, getMember} from "../../../api/memberApi";
+import {deleteMember, getMember, getProfilePhoto} from "../../../api/memberApi";
 import styles from "./MemberReadComponent.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -45,12 +45,19 @@ const MemberReadComponent = ({ eid }) => {
 
   }
 
+
+
   useEffect(() => {
+    
     getMember(eid).then((data) => {
       console.log(data);
       setMember(data);
+  
     });
   }, [eid]);
+
+
+
 
   return (
     <div>
@@ -63,7 +70,9 @@ const MemberReadComponent = ({ eid }) => {
             <li>
               <div className={styles.myphoto}>
                 <img
-                  src="https://static.nid.naver.com/images/web/user/default.png"
+               src={`http://localhost/member/profile/${member.profileImagePath}`}
+               //http://localhost/member/profile/686a43b0-7f3d-435c-b25c-da7eac11d71a_%EC%A6%9D%EB%AA%85%EC%82%AC%EC%A7%84(1).jpg
+                  // src="https://static.nid.naver.com/images/web/user/default.png"
                   width="56"
                   height="56"
                   alt="내 프로필 이미지"
