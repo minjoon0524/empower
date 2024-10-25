@@ -98,9 +98,9 @@ const LoginComponent = () => {
               <button className={style.btn_submit} onClick={handleClickLogin}>
                 로그인
               </button>
-              <button className={style.btn_submit} onClick={goToJoin}>
+              {/* <button className={style.btn_submit} onClick={goToJoin}>
                 회원가입
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
