@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { addMember } from "../../api/memberApi";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
   eid: "",
@@ -17,6 +18,8 @@ const initState = {
 const JoinComponent = ({ isOpen, onRequestClose }) => {
   const [member, setMember] = useState(initState);
 
+  const {moveToModify}=useCustomMove()
+
   const handleInputChange = (e) => {
     member[e.target.name] = e.target.value
     setMember({...member})
@@ -28,6 +31,7 @@ const JoinComponent = ({ isOpen, onRequestClose }) => {
       console.log("addMember Result : ",data)
     })
     onRequestClose();
+    // moveToModify();
   };
 
   return (
