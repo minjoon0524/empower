@@ -1,0 +1,77 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, helvetica,
+    "Apple SD Gothic Neo", sans-serif;
+}
+
+.memberCard {
+  padding: 16px 16px 16px 16px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+
+  max-width: 700px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.time_btn {
+  margin-left: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.btn_submit {
+  height: 52px;
+  width: 160px;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fff;
+  color: #202124;
+  line-height: 52px;
+  border: 1px solid #e6e8eb;
+  border: none;
+  background-color: #001e46;
+  color: #fff;
+  
+  font-weight: 700;
+}
+
+.btn_submit:hover {
+  background-color: #00275a;
+}
+
+.current_data {
+  letter-spacing: -2px;
+  font-weight: 549;
+  font-size: 2rem;
+  color: #707070;
+  text-decoration: none;
+
+}
+.time_info {
+  margin: 30px 80px 30px 30px;
+}
+
+.current_time {
+ 
+  letter-spacing: -2px;
+  font-weight: 549;
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: #707070;
+  text-decoration: none;
+}
+.line{
+  border: 1px solid #e6e8eb; /* 아래쪽 테두리 추가 */
+}
+
+.check_in_time, .check_out_time {
+  letter-spacing: 0px;
+  font-size: 1rem;
+
+  font-weight: 540; /* 폰트 두께를 500으로 설정 */
+  color: black;
+  padding-bottom: 5px; /* 아래쪽 패딩 추가 */
+}
