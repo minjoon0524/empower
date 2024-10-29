@@ -23,9 +23,13 @@ const CategoryMenu = () => {
                   </Link>
                 </li>
                 <li class="">
-                  <a data-lwds-atom="true" className={style.sub_item} href="#">
-                    맞춤 설정
-                  </a>
+                <Link
+                    to="/member/attendance/read"
+                    data-lwds-atom="true"
+                    className={style.sub_item}
+                  >
+                    근태관리
+                  </Link>
                 </li>
               </ul>
             </li>
