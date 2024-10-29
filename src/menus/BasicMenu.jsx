@@ -14,7 +14,7 @@ const BasicMenu = () => {
   const handleClickLogout = (event) => {
     event.preventDefault(); // 기본 동작 방지
     doLogout()
-    navigate('/login')
+    navigate('/')
   };
   console.log("loginState Test---------", loginState);
   return (
