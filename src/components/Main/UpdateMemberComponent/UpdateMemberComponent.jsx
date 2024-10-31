@@ -63,7 +63,7 @@ const UpdateMemberComponent = ({ eid }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        // member 객체에 프로필 이미지 정보를 저장할 필요는 없음
+        
       };
       reader.readAsDataURL(file);
     }
