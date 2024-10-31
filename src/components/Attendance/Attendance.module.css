@@ -3,6 +3,37 @@ body {
     "Apple SD Gothic Neo", sans-serif;
 }
 
+
+.memberTable {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  padding-top: 30px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.memberTable th,
+.memberTable td {
+  padding: 6px 15px;
+}
+
+.memberTable th {
+  background: #42444e;
+  color: #fff;
+  text-align: left;
+}
+
+.memberTable td {
+  border-right: 1px solid #c6c9cc;
+  border-bottom: 1px solid #c6c9cc;
+}
+
+.memberTable tr:nth-child(even) td {
+  background: #eaeaed;
+}
+
+
 .memberCard {
   padding: 16px 16px 16px 16px;
   background-color: #ffffff;
