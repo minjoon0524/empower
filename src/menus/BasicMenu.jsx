@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Menu.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/loginSlice";
@@ -16,6 +16,7 @@ const BasicMenu = () => {
     doLogout()
     navigate('/')
   };
+
   console.log("loginState Test---------", loginState);
   return (
     <nav className={style.container}>
