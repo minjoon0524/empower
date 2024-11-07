@@ -18,7 +18,7 @@ const initState = {
 };
 
 const AdminAttendanceComponent = () => {
-  const { page, size, refresh, moveToList, moveToRead } = useCustomMove();
+  const { page, size, refresh, moveToList, moveToRead,moveToAttendanceList } = useCustomMove();
   const [serverData, setServerData] = useState(initState);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchField, setSearchField] = useState("name"); // 검색 옵션
@@ -61,7 +61,7 @@ const AdminAttendanceComponent = () => {
   };
 
   const handlePageClick = ({ selected }) => {
-    moveToList({ page: selected + 1, size });
+    moveToAttendanceList({ page: selected + 1, size });
   };
 
   const handleSearch = () => {
