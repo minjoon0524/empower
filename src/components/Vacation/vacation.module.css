@@ -1,0 +1,118 @@
+.container {
+
+    margin: 0 auto;
+    /* margin-top: 40px; */
+    padding: 24px;
+    background-color: white;
+    width: 80%;
+  }
+
+  
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .select,
+  .input,
+  .dateInput {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .dateRange {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .dateSeparator {
+    color: #666;
+  }
+  
+  .dateTotal {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .dateInput {
+    flex: 1;
+  }
+  
+  .approvers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .approver {
+    text-align: center;
+  }
+  
+  .approverAvatar {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    background-color: #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .approverAvatar span {
+    font-size: 14px;
+  }
+  
+  .approverStatus {
+    font-size: 12px;
+    color: #666;
+    display: block;
+    margin-top: 4px;
+  }
+  
+  .waitingStatus {
+    width: 80px;
+    height: 32px;
+    background-color: #065f46;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 8px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submitButton:hover {
+    background-color: #1d4ed8;
+  }
