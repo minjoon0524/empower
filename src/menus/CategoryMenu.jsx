@@ -22,6 +22,26 @@ const CategoryMenu = () => {
                     직원조회
                   </Link>
                 </li>
+              
+              </ul>
+            </li>
+
+
+            <li class="member">
+              <a data-lwds-atom="true" className={style.item_txt} href="#">
+                근태관리
+              </a>
+              <ul className={style.sub_menu}>
+              <li class="">
+                <Link
+                    to="/member/attendance/list"
+                    data-lwds-atom="true"
+                    className={style.sub_item}
+                  >
+                    근태관리(관리자)
+                  </Link>
+                </li>
+
                 <li class="">
                 <Link
                     to="/member/attendance/read"
@@ -33,20 +53,32 @@ const CategoryMenu = () => {
                 </li>
               </ul>
             </li>
+
+
+
             <li class="member">
               <a data-lwds-atom="true" className={style.item_txt} href="#">
-                근태관리
+                휴가관리
               </a>
               <ul className={style.sub_menu}>
-                <li class="">
-                  <a data-lwds-atom="true" className={style.sub_item} href="#">
-                    구성원
-                  </a>
+              <li class="">
+                <Link
+                    to="/vacation/list"
+                    data-lwds-atom="true"
+                    className={style.sub_item}
+                  >
+                    휴가신청내역(관리자)
+                  </Link>
                 </li>
+
                 <li class="">
-                  <a data-lwds-atom="true" className={style.sub_item} href="#">
-                    구성원 초대
-                  </a>
+                <Link
+                    to="/vacation/form"
+                    data-lwds-atom="true"
+                    className={style.sub_item}
+                  >
+                    휴가신청
+                  </Link>
                 </li>
               </ul>
             </li>
