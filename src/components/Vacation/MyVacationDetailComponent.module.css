@@ -1,0 +1,36 @@
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #001e46;
+}
+
+.detailGroup {
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.rowItem {
+  padding: 12px 0;
+  border-bottom: 1px solid #e3e9ed;
+}
+
+.itemText {
+  font-size: 16px;
+  color: #303038;
+}
+
+.rowItem:last-child {
+  border-bottom: none; /* 마지막 항목의 하단 경계선 제거 */
+}
