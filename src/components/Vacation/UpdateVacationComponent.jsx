@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./UpdateVacation.module.css";
 import { deleteVacation, getMemberVacation } from "../../api/vacationApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
@@ -17,16 +17,18 @@ const initState = {
   regTime: "",
 };
 
-const UpdateVacationComponent = ({ vacId }) => {
+const UpdateVacationComponent = () => {
+  const { vacId } = useParams();
   const [vacation, setVacation] = useState(initState);
   const { moveToModify } = useCustomMove();
 
-  // useEffect(() => {
-  //   getMemberVacation(vacId).then((data) => {
-  //     console.log("===== 휴가 수정 테스트 진행 ====")
-  //     setVacation(data);
-  //   });
-  // }, [vacId]);
+
+useEffect(()=>{
+  getMemberVacation(vacId).then((data)=>{
+    setVacation(data)
+    console.log(data)
+    })
+},[vacId])
 
   const getVacStatusKorean = (status) => {
     const statuses = {
@@ -46,7 +48,9 @@ const UpdateVacationComponent = ({ vacId }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    vacation[e.target.name] = e.target.value;
+    setVacation({...vacation})
+    console.log(vacation)
     // setVacation((prev) => ({ ...prev, [name]: value }));
   };
 
