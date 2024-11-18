@@ -1,6 +1,7 @@
 import React from 'react'
 import { Suspense, lazy } from "react";
 import { ClipLoader } from "react-spinners";
+import UpdateVacationPage from '../pages/Vacation/UpdateVacationPage';
 
 const Loading = (
     <div style={{
@@ -19,6 +20,9 @@ const Loading = (
 
 const Vacation = lazy(() => import("../pages/Vacation/VacationPage"));
 const AdminList= lazy(() => import("../pages/Vacation/AdminVacationList"));
+const MyList= lazy(() => import("../pages/Vacation/MyVacationListPage"));
+const MyDetail= lazy(() => import("../pages/Vacation/MyVacationDetailPage"));
+const UpdateVacation= lazy(() => import("../pages/Vacation/UpdateVacationPage"));
 
 const vacationRouter = () => {
     return [
@@ -41,6 +45,33 @@ const vacationRouter = () => {
             </Suspense>
           ),
         },
+        {
+          path: "myList",
+          element: (
+            <Suspense fallback={Loading}>
+              <MyList/>
+            </Suspense>
+          ),
+        },
+
+        {
+          path: "read/:vacId",
+          element: (
+            <Suspense fallback={Loading}>
+              <MyDetail/>
+            </Suspense>
+          ),
+        },
+
+        
+    {
+      path: "modify/:vacId",
+      element: (
+        <Suspense fallback={Loading}>
+          <UpdateVacation />
+        </Suspense>
+      ),
+    },
   
   
     ];
