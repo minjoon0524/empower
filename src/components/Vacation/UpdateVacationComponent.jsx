@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./UpdateVacation.module.css";
-import { deleteVacation, getMemberVacation } from "../../api/vacationApi";
+import { deleteVacation, getMemberVacation, updateVacation } from "../../api/vacationApi";
 import { useNavigate, useParams } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
 
@@ -20,24 +20,19 @@ const initState = {
 const UpdateVacationComponent = () => {
   const { vacId } = useParams();
   const [vacation, setVacation] = useState(initState);
-  const { moveToModify } = useCustomMove();
+  const { moveToRead } = useCustomMove();
 
+ const handleClickModify = () => {
 
-useEffect(()=>{
-  getMemberVacation(vacId).then((data)=>{
-    setVacation(data)
+  
+  updateVacation(vacId,vacation).then((data)=>{
+    
     console.log(data)
-    })
-},[vacId])
+    alert("수정되었습니다.");
+    moveToRead(vacId)
+  })
 
-  const getVacStatusKorean = (status) => {
-    const statuses = {
-      APPROVE: "승인",
-      PENDING: "대기중",
-      REJECT: "거절",
-    };
-    return statuses[status] || status;
-  };
+}
 
   const handleDelete = () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
@@ -48,11 +43,16 @@ useEffect(()=>{
   };
 
   const handleChange = (e) => {
-    vacation[e.target.name] = e.target.value;
-    setVacation({...vacation})
-    console.log(vacation)
-    // setVacation((prev) => ({ ...prev, [name]: value }));
+    setVacation({ ...vacation, [e.target.name]: e.target.value });
+    console.log(vacation);
   };
+
+    useEffect(() => {
+    getMemberVacation(vacId).then((data) => {
+      setVacation(data); // data를 사용하여 vacation 상태를 업데이트
+      console.log(data);
+    });
+  }, [vacId]);
 
   const isEditable = vacation.vacStatus === "PENDING";
 
@@ -90,8 +90,6 @@ useEffect(()=>{
             <option value="MILITARY_SERVICE">예비군</option>
           </select>
         </div>
-
-
 
         <div className={styles.row}>
           <div className={styles.label}>시작일</div>
@@ -131,12 +129,11 @@ useEffect(()=>{
         </div>
       </div>
 
-      {/* 버튼 그룹을 맨 아래에 배치 */}
       {isEditable && (
         <div className={styles.bottomButtonGroup}>
           <button
             className={`${styles.button} ${styles.editButton}`}
-            onClick={moveToModify(vacId)}
+            onClick={()=>handleClickModify(vacId,vacation)}
           >
             수정
           </button>
@@ -148,6 +145,7 @@ useEffect(()=>{
           </button>
         </div>
       )}
+
     </div>
   );
 };
