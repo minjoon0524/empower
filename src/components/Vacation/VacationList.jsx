@@ -18,7 +18,8 @@ const initState = {
 };
 
 const VacationList = () => {
-  const { page, size, refresh, moveToVacationList } = useCustomMove();
+  const { page, size, refresh, moveToVacationList, moveToRead } =
+    useCustomMove();
   const [serverData, setServerData] = useState(initState);
 
   const handlePageClick = ({ selected }) => {
@@ -62,14 +63,14 @@ const VacationList = () => {
 
   const handleApprove = async (vacId) => {
     try {
-      const result = await approveVacation({ vacId, vacStatus: 'APPROVE' }); // 서버에 승인 요청
+      const result = await approveVacation({ vacId, vacStatus: "APPROVE" }); // 서버에 승인 요청
       // 서버 응답에 따라 상태 업데이트
       if (result) {
-        setServerData(prevState => ({
+        setServerData((prevState) => ({
           ...prevState,
-          dtoList: prevState.dtoList.map(item =>
-            item.vacId === vacId ? { ...item, vacStatus: 'APPROVE' } : item
-          )
+          dtoList: prevState.dtoList.map((item) =>
+            item.vacId === vacId ? { ...item, vacStatus: "APPROVE" } : item
+          ),
         }));
       }
     } catch (error) {
@@ -79,14 +80,14 @@ const VacationList = () => {
 
   const handleReject = async (vacId) => {
     try {
-      const result = await approveVacation({ vacId, vacStatus: 'REJECT' }); // 서버에 거절 요청
+      const result = await approveVacation({ vacId, vacStatus: "REJECT" }); // 서버에 거절 요청
       // 서버 응답에 따라 상태 업데이트
       if (result) {
-        setServerData(prevState => ({
+        setServerData((prevState) => ({
           ...prevState,
-          dtoList: prevState.dtoList.map(item =>
-            item.vacId === vacId ? { ...item, vacStatus: 'REJECT' } : item
-          )
+          dtoList: prevState.dtoList.map((item) =>
+            item.vacId === vacId ? { ...item, vacStatus: "REJECT" } : item
+          ),
         }));
       }
     } catch (error) {
@@ -108,17 +109,17 @@ const VacationList = () => {
   const getStatusBadge = (status) => {
     let badgeClass = styles.statusBadge;
     let displayText = "";
-  
+
     switch (status) {
-      case 'PENDING':
+      case "PENDING":
         badgeClass += ` ${styles.statusPending}`;
         displayText = "대기 중";
         break;
-      case 'APPROVE':
+      case "APPROVE":
         badgeClass += ` ${styles.statusApproved}`;
         displayText = "승인됨";
         break;
-      case 'REJECT':
+      case "REJECT":
         badgeClass += ` ${styles.statusRejected}`;
         displayText = "거절됨";
         break;
@@ -126,28 +127,28 @@ const VacationList = () => {
         displayText = status; // 알 수 없는 상태는 그대로 표시
         break;
     }
-  
+
     return <span className={badgeClass}>{displayText}</span>;
   };
 
   const getLeaveTypeText = (vacType) => {
     switch (vacType) {
-      case 'GENERAL':
-        return '일반';
-      case 'HALF_DAY':
-        return '반차';
-      case 'SICK_LEAVE':
-        return '병가';
-      case 'CONDOLENCE_SPOUSE':
-        return '조사(배우자)';
-      case 'CONDOLENCE_PARENT':
-        return '조사(부모님)';
-      case 'CONDOLENCE_SIBLING':
-        return '조사(형제)';
-      case 'MILITARY_SERVICE':
-        return '예비군';
+      case "GENERAL":
+        return "일반";
+      case "HALF_DAY":
+        return "반차";
+      case "SICK_LEAVE":
+        return "병가";
+      case "CONDOLENCE_SPOUSE":
+        return "조사(배우자)";
+      case "CONDOLENCE_PARENT":
+        return "조사(부모님)";
+      case "CONDOLENCE_SIBLING":
+        return "조사(형제)";
+      case "MILITARY_SERVICE":
+        return "예비군";
       default:
-        return vacType; 
+        return vacType;
     }
   };
 
@@ -165,7 +166,6 @@ const VacationList = () => {
         <button onClick={() => setFilter("PENDING")}>대기</button>
         <button onClick={() => setFilter("APPROVE")}>승인</button>
         <button onClick={() => setFilter("REJECT")}>거절</button>
-
       </div>
 
       <div>
@@ -220,21 +220,31 @@ const VacationList = () => {
               >
                 휴가 등록일{getSortDirection("regTime")}
               </th>
-              <th className={styles.headerCell}
-                 onClick={() => handleSort("vacStatus")}
-              
-              >승인 상태{getSortDirection("vacStatus")}</th>
+              <th
+                className={styles.headerCell}
+                onClick={() => handleSort("vacStatus")}
+              >
+                승인 상태{getSortDirection("vacStatus")}
+              </th>
               <th className={styles.headerCell}></th>
             </tr>
           </thead>
           <tbody>
             {filteredData.map((row) => (
               <tr key={row.vacId} className={styles.tableRow}>
-                <td className={styles.tableCell}>{row.vacId}</td>
+                <td
+                  className={styles.tableCell}
+                  onClick={() => moveToRead(row.vacId)}
+                >
+                  {row.vacId}
+                </td>
                 <td className={styles.tableCell}>{row.memberName}</td>
                 <td className={styles.tableCell}>{row.department}</td>
                 <td className={styles.tableCell}>{row.position}</td>
-                <td className={styles.tableCell}>{getLeaveTypeText(row.vacType)}</td>                <td className={styles.tableCell}>{row.vacStartDate}</td>
+                <td className={styles.tableCell}>
+                  {getLeaveTypeText(row.vacType)}
+                </td>
+                <td className={styles.tableCell}>{row.vacStartDate}</td>
                 <td className={styles.tableCell}>{row.vacEndDate}</td>
                 <td className={styles.tableCell}>{row.regTime}</td>
                 <td className={styles.tableCell}>
