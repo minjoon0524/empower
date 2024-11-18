@@ -1,36 +1,101 @@
 .container {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 16px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  width: auto;
+  /* max-width: 32rem; */
+  padding: 3.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  color: #001e46;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.5rem;
 }
 
-.detailGroup {
-  padding: 16px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+.formGrid {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 2rem; /* 버튼과의 간격 */
 }
 
-.rowItem {
-  padding: 12px 0;
-  border-bottom: 1px solid #e3e9ed;
+.row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
 }
 
-.itemText {
-  font-size: 16px;
-  color: #303038;
+.label {
+  font-weight: 500;
+  background-color: #f9fafb;
+  padding: 0.5rem;
+  color: #374151;
 }
 
-.rowItem:last-child {
-  border-bottom: none; /* 마지막 항목의 하단 경계선 제거 */
+.value {
+  padding: 0.5rem;
+  color: #111827;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  color: #4b5563;
+  font-size: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+/* 하단 버튼 그룹 스타일 */
+.bottomButtonGroup {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 6rem;
+}
+
+.editButton {
+  background-color: #032d65;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #032859;
+}
+
+.deleteButton {
+  background-color: #032d65;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #032859;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 640px) {
+  .bottomButtonGroup {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .button {
+    width: 100%;
+    min-width: auto;
+  }
 }
