@@ -5,33 +5,24 @@ body {
 
 
 .memberTable {
-  border-collapse: separate;
-  border-spacing: 0;
   width: 100%;
-  padding-top: 30px;
-  padding-left: 100px;
-  padding-right: 100px;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .memberTable th,
 .memberTable td {
-  padding: 6px 15px;
-}
-
-.memberTable th {
-  background: #42444e;
-  color: #fff;
+  padding: 10px ;
   text-align: left;
+  text-align: center;
 }
 
-.memberTable td {
-  border-right: 1px solid #c6c9cc;
-  border-bottom: 1px solid #c6c9cc;
+.memberTable thead{
+  background-color: #f4f4f4;
 }
 
-.memberTable tr:nth-child(even) td {
-  background: #eaeaed;
-}
 
 
 .memberCard {
@@ -105,4 +96,80 @@ body {
   font-weight: 540; /* 폰트 두께를 500으로 설정 */
   color: black;
   padding-bottom: 5px; /* 아래쪽 패딩 추가 */
+}
+
+
+.cal_area{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cal{
+  width: 20%;
+  text-align: center;
+}
+
+
+/* admin attendance table/
+.attendance_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.attendanceTable {
+  width: 80%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.attendanceTable th,
+.attendanceTable td {
+  padding: 10px;
+  border: 1px solid #c6c9cc;
+  text-align: left;
+}
+
+.attendanceTable th {
+  background-color: #42444e;
+  color: white;
+}
+
+.attendanceTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* 페이지네이션 CSS */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pageItem {
+  margin: 0 5px;
+}
+
+.pageLink {
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #c6c9cc;
+  color: #666;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.pageLink:hover {
+  background-color: #eaeaed;
+}
+
+.active .pageLink {
+  background-color: #42444e;
+  color: white;
+  border-color: #42444e;
 }

@@ -1,47 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Attendance.module.css";
-import { getOneMemberAttendance } from "../../api/attendanceApi";
-import useCustomLogin from "../../hooks/useCustomLogin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-const PersonalAttendanceTable = () => {
-  const { loginState } = useCustomLogin();
-  const [member, setMember] = useState([]);
-  const eid = loginState.eid;
+const PersonalAttendanceTable = ({ member,memberList }) => {
+  const getStatusText = (status) => {
+    switch (status) {
+      case "CHECKED_IN":
+        return "출근";
+      case "CHECKED_OUT":
+        return "퇴근";
+      case "LATE":
+        return "지각";
+      case "ABSENT":
+        return "결근";
+      default:
+        return "미등록";
+    }
+  };
 
-  useEffect(() => {
-    getOneMemberAttendance(eid).then((data) => {
-      setMember(data.dtoList);  // data.dtoList가 배열일 경우 그대로 세팅
-    });
-  }, [eid]);
+  const groupByYearMonth = (attendanceData) => {
+    console.log(attendanceData)
+    return attendanceData.reduce((acc, curr) => {
+      const date = new Date(curr.checkInTime);
+      const yearMonth = `${date.getFullYear()}-${date.getMonth() + 1}`;
+
+      if (!acc[yearMonth]) {
+        acc[yearMonth] = [];
+      }
+      acc[yearMonth].push(curr);
+  
+      return acc;
+    }, {});
+  };
+
+  const groupedData = groupByYearMonth(memberList);
 
   return (
     <div className={styles.memberCard}>
-      <table className="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th className="col-md-1">번호</th>
-            <th className="col-md-2">직원 ID</th>
-            <th className="col-md-2">이름</th>
-            <th className="col-md-2">부서</th>
-            <th className="col-md-2">출근 시간</th>
-            <th className="col-md-2">퇴근 시간</th>
-            <th className="col-md-1">상태</th>
-          </tr>
-        </thead>
-        <tbody>
-          {member.map((item, index) => (
-            <tr key={item.employeeId}>
-              <td>{index + 1}</td>
-              <td>{item.eid}</td>
-              <td>{item.name}</td>
-              <td>{item.department}</td>
-              <td>{item.checkInTime}</td>
-              <td>{item.checkOutTime}</td>
-              <td>{item.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {Object.keys(groupedData)
+        .filter((yearMonth) => yearMonth.endsWith('-11'))
+        .map((yearMonth) => (
+          <div key={yearMonth}>
+            <div className={styles.cal_area}>
+              <FontAwesomeIcon icon={faArrowLeft} />
+              <h3 className={styles.cal}>{yearMonth}</h3>
+              <FontAwesomeIcon icon={faArrowRight} />
+            </div>
+            
+            <table className={styles.memberTable}>
+              <thead>
+                <tr>
+                  <th className="col-md-1">번호</th>
+                  <th className="col-md-2">직원 ID</th>
+                  <th className="col-md-2">이름</th>
+                  <th className="col-md-2">부서</th>
+                  <th className="col-md-2">출근 시간</th>
+                  <th className="col-md-2">퇴근 시간</th>
+                  <th className="col-md-1">상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                {groupedData[yearMonth].map((memberData, index) => (
+                  <tr key={memberData.eid}>
+                    <td>{index + 1}</td>
+                    <td>{memberData.eid}</td>
+                    <td>{memberData.name}</td>
+                    <td>{memberData.department}</td>
+                    <td>{memberData.checkInTime}</td>
+                    <td>{memberData.checkOutTime}</td>
+                    <td>{getStatusText(memberData.status)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
     </div>
   );
 };
