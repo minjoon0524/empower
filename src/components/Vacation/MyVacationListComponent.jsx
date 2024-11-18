@@ -17,7 +17,7 @@ const initState = {
     current: 0,
   };
 const MyVacationListComponent = ({ pageParam }) => {
-    const { page, size, refresh, moveToVacationList } = useCustomMove();
+    const { page, size, refresh, moveToVacationList,moveToRead } = useCustomMove();
     const [serverData, setServerData] = useState(initState);
     const {loginState}=useCustomLogin();
     const eid=loginState.eid
@@ -172,6 +172,7 @@ const MyVacationListComponent = ({ pageParam }) => {
           <table className={styles.table}>
             <thead className={styles.tableHeader}>
               <tr>
+
                 <th
                   className={styles.headerCell}
                   onClick={() => handleSort("vacId")}
@@ -222,7 +223,7 @@ const MyVacationListComponent = ({ pageParam }) => {
                 </th>
                 <th className={styles.headerCell}
                    onClick={() => handleSort("vacStatus")}
-                
+
                 >승인 상태{getSortDirection("vacStatus")}</th>
                 <th className={styles.headerCell}></th>
               </tr>
@@ -230,8 +231,11 @@ const MyVacationListComponent = ({ pageParam }) => {
             <tbody>
               {filteredData.map((row) => (
                 <tr key={row.vacId} className={styles.tableRow}>
-                  <td className={styles.tableCell}>{row.vacId}</td>
-                  {/* <td className={styles.tableCell}>{row.memberName}</td>
+                    <td
+                        className={styles.tableCell}
+                        onClick={() => moveToRead(row.vacId)}
+                    >{row.vacId}</td>
+                    {/* <td className={styles.tableCell}>{row.memberName}</td>
                   <td className={styles.tableCell}>{row.department}</td>
                   <td className={styles.tableCell}>{row.position}</td> */}
                   <td className={styles.tableCell}>{getLeaveTypeText(row.vacType)}</td>                <td className={styles.tableCell}>{row.vacStartDate}</td>

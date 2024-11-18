@@ -120,7 +120,7 @@ const MyVacationDetailComponent = ({ vacId }) => {
         <div className={styles.bottomButtonGroup}>
           <button
             className={`${styles.button} ${styles.editButton}`}
-            onClick={moveToModify(vacId)}
+            onClick={()=>moveToModify(vacId)}
           >
             수정
           </button>
