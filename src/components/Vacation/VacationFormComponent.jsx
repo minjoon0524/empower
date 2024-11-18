@@ -66,7 +66,8 @@ function VacationFormComponent() {
     }
     registerVacation(serverData).then((data) => {
       console.log(data);
-      // 추가 로직 (예: 성공 메시지 표시, 폼 초기화 등)
+      alert("휴가신청이 완료되었습니다.")
+      // 내 휴가 신청 내역으로 이동할 수 있게 구성
     });
   };
 
@@ -139,7 +140,7 @@ function VacationFormComponent() {
 
         {/* 제출 버튼 */}
         <button onClick={handleClickAdd} className={styles.submitButton}>
-          Submit
+          휴가 신청
         </button>
       </form>
     </div>

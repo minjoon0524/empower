@@ -34,7 +34,7 @@
   .select,
   .input,
   .dateInput {
-    width: 100%;
+    width: calc(100% - 16px);
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -105,7 +105,7 @@
   .submitButton {
     width: 100%;
     padding: 8px;
-    background-color: #2563eb;
+    background-color: #001e46;
     color: white;
     border: none;
     border-radius: 6px;
@@ -114,5 +114,5 @@
   }
   
   .submitButton:hover {
-    background-color: #1d4ed8;
+    background-color:#032d65;
   }
