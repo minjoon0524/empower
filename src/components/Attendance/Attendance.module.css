@@ -23,7 +23,10 @@ body {
   background-color: #f4f4f4;
 }
 
-
+.memberTable th{
+  font-size: 13px;
+  color: #000000;
+}
 
 .memberCard {
   padding: 16px 16px 16px 16px;
@@ -56,8 +59,9 @@ body {
   border: none;
   background-color: #001e46;
   color: #fff;
-  
+  cursor: pointer;
   font-weight: 700;
+  letter-spacing: 3px;
 }
 
 .btn_submit:hover {
@@ -66,9 +70,8 @@ body {
 
 .current_data {
   letter-spacing: -2px;
-  font-weight: 549;
-  font-size: 2rem;
-  color: #707070;
+  font-size: 1.7rem;
+  color: #000000;
   text-decoration: none;
 
 }
@@ -82,7 +85,7 @@ body {
   font-weight: 549;
   font-size: 1.5rem;
   margin-top: 10px;
-  color: #707070;
+  color: #000000;
   text-decoration: none;
 }
 .line{
@@ -91,10 +94,8 @@ body {
 
 .check_in_time, .check_out_time {
   letter-spacing: 0px;
-  font-size: 1rem;
-
-  font-weight: 540; /* 폰트 두께를 500으로 설정 */
-  color: black;
+  font-size: 15px;
+  color: #000000;
   padding-bottom: 5px; /* 아래쪽 패딩 추가 */
 }
 
@@ -111,36 +112,6 @@ body {
   text-align: center;
 }
 
-
-/* admin attendance table/
-.attendance_area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.attendanceTable {
-  width: 80%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.attendanceTable th,
-.attendanceTable td {
-  padding: 10px;
-  border: 1px solid #c6c9cc;
-  text-align: left;
-}
-
-.attendanceTable th {
-  background-color: #42444e;
-  color: white;
-}
-
-.attendanceTable tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
 
 /* 페이지네이션 CSS */
 .pagination {
@@ -172,4 +143,10 @@ body {
   background-color: #42444e;
   color: white;
   border-color: #42444e;
+}
+
+.dateSeparator {
+  /* font-weight: bold; 글씨 두껍게 */
+  margin: 10px 10px; /* 좌우 여백 추가 */
+  color: #333; /* 색상 설정 */
 }
