@@ -1,102 +1,117 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCalendar, faPlane, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import style from "./Menu.module.css";
-const CategoryMenu = () => {
+
+const TreeItem = ({ label, children, isOpen, onToggle, icon, isActive }) => {
   return (
-    <div className={style.category_container}>
-      <div className={style.category_item}>
-        <div className={style.menu_box}>
-          <ul class="menu_list">
-            <li class="general">
-              <a data-lwds-atom="true" className={style.item_txt} href="#">
-                인사관리
-              </a>
-              <ul className={style.sub_menu}>
-                <li class="">
-                  <Link
-                    to="/member/search"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    직원조회
-                  </Link>
-                </li>
-              
-              </ul>
-            </li>
+    <div className={`${style.treeItem} ${isActive ? style.active : ''}`}>
+      <div className={style.treeLabel} onClick={onToggle}>
+        {icon} {/* 아이콘 렌더링 */}
+        <span className={style.labelText}>{label}</span>
+        <span className={style.chevronIcon}>
+          {isOpen ? (
+            <FontAwesomeIcon icon={faChevronDown} className={style.icon} />
+          ) : (
+            <FontAwesomeIcon icon={faChevronRight} className={style.icon} />
+          )}
+        </span>
+      </div>
+      {isOpen && <div className={style.subMenu}>{children}</div>}
+    </div>
+  );
+};
 
+const CategoryMenu = () => {
+  const location = useLocation();
+  const [openItems, setOpenItems] = useState({
+    hrManagement: false,
+    attendanceManagement: false,
+    vacationManagement: false,
+  });
 
-            <li class="member">
-              <a data-lwds-atom="true" className={style.item_txt} href="#">
+  const [activeItem, setActiveItem] = useState(null);
+
+  useEffect(() => {
+    // 현재 URL에 따라 activeItem 및 openItems 설정
+    const path = location.pathname;
+
+    if (path.includes("/member/search")) {
+      setActiveItem("hrManagement");
+      setOpenItems((prev) => ({ ...prev, hrManagement: true }));
+    } else if (path.includes("/member/attendance")) {
+      setActiveItem("attendanceManagement");
+      setOpenItems((prev) => ({ ...prev, attendanceManagement: true }));
+    } else if (path.includes("/vacation")) {
+      setActiveItem("vacationManagement");
+      setOpenItems((prev) => ({ ...prev, vacationManagement: true }));
+    } else {
+      setActiveItem(null);
+    }
+  }, [location]);
+
+  const toggleItem = (key) => {
+    setOpenItems((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+    setActiveItem(key);
+  };
+
+  return (
+    <div className={style.categoryContainer}>
+      <div className={style.categoryItem}>
+        <ul className={style.menuList}>
+          <li className={style.item}>
+            <TreeItem
+              label="인사관리"
+              isOpen={openItems.hrManagement}
+              onToggle={() => toggleItem("hrManagement")}
+              icon={<FontAwesomeIcon icon={faUser} className={style.icon} />}
+              isActive={activeItem === "hrManagement"}
+            >
+              <Link to="/member/search" className={`${style.subItem} ${activeItem === "hrManagement" ? style.activeSubItem : ''}`}>
+                직원조회
+              </Link>
+            </TreeItem>
+          </li>
+          <li className={style.item}>
+            <TreeItem
+              label="근태관리"
+              isOpen={openItems.attendanceManagement}
+              onToggle={() => toggleItem("attendanceManagement")}
+              icon={<FontAwesomeIcon icon={faCalendar} className={style.icon} />}
+              isActive={activeItem === "attendanceManagement"}
+            >
+              <Link to="/member/attendance/list" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
+                근태관리(관리자)
+              </Link>
+              <Link to="/member/attendance/read" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
                 근태관리
-              </a>
-              <ul className={style.sub_menu}>
-              <li class="">
-                <Link
-                    to="/member/attendance/list"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    근태관리(관리자)
-                  </Link>
-                </li>
-
-                <li class="">
-                <Link
-                    to="/member/attendance/read"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    근태관리
-                  </Link>
-                </li>
-              </ul>
-            </li>
-
-
-
-            <li class="member">
-              <a data-lwds-atom="true" className={style.item_txt} href="#">
-                휴가관리
-              </a>
-              <ul className={style.sub_menu}>
-
-              <li class="">
-                <Link
-                    to="/vacation/form"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    휴가신청
-                  </Link>
-                </li>
-
-              <li class="">
-                <Link
-                    to="/vacation/list"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    휴가신청내역(관리자)
-                  </Link>
-                </li>
-
-                
-                <li class="">
-                <Link
-                    to="/vacation/myList"
-                    data-lwds-atom="true"
-                    className={style.sub_item}
-                  >
-                    휴가신청내역
-                  </Link>
-                </li>
-
-
-              </ul>
-            </li>
-          </ul>
-        </div>
+              </Link>
+            </TreeItem>
+          </li>
+          <li className={style.item}>
+            <TreeItem
+              label="휴가관리"
+              isOpen={openItems.vacationManagement}
+              onToggle={() => toggleItem("vacationManagement")}
+              icon={<FontAwesomeIcon icon={faPlane} className={style.icon} />}
+              isActive={activeItem === "vacationManagement"}
+            >
+              <Link to="/vacation/form" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+                휴가신청
+              </Link>
+              <Link to="/vacation/list" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+                휴가신청내역(관리자)
+              </Link>
+              <Link to="/vacation/myList" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+                휴가신청내역
+              </Link>
+            </TreeItem>
+          </li>
+        </ul>
       </div>
     </div>
   );
