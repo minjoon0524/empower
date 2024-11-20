@@ -18,47 +18,16 @@ const initState = {
 };
 
 const AdminAttendanceComponent = () => {
-  const { page, size, refresh, moveToList, moveToRead,moveToAttendanceList } = useCustomMove();
+  const { page, size, refresh, moveToAttendanceList } =
+    useCustomMove();
   const [serverData, setServerData] = useState(initState);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [searchField, setSearchField] = useState("name"); // 검색 옵션
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-  const [startDate, setStartDate] = useState(""); // 날짜 선택
-
-  useEffect(() => {
-    fetchMembers()
-  }, [page, size, refresh]);
-
-  const fetchMembers = async () => {
-    try {
-      const data = await getAttendanceList({ 
-        page, 
-        size, 
-        searchTerm, 
-        searchField, 
-        date: startDate
-      });
-      console.log(data)
-      const formattedData = data.dtoList.map(member => ({
-        employeeId: member.employeeId,
-        eid: member.eid,
-        name: member.name,
-        department: member.department,
-        checkInTime: member.checkInTime,
-        checkOutTime: member.checkOutTime,
-        status: member.status,
-      }));
-      setServerData({ ...data, dtoList: formattedData });
-    } catch (error) {
-      if (error.response && error.response.data.error === "ERROR_ACCESS_TOKEN") {
-        alert("액세스 토큰이 만료되었습니다. 다시 로그인 해주세요.");
-      } else {
-        console.error("회원 목록 가져오기 오류:", error);
-      }
-    } finally {
-      // any necessary cleanup
-    }
-  };
+  // 오늘 날짜를 기본값으로 설정
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(today); // 시작 날짜
+  const [endDate, setEndDate] = useState(today); // 종료 날짜
 
   const handlePageClick = ({ selected }) => {
     moveToAttendanceList({ page: selected + 1, size });
@@ -67,6 +36,19 @@ const AdminAttendanceComponent = () => {
   const handleSearch = () => {
     fetchMembers(); // 검색어와 날짜에 따라 멤버 목록 새로 가져옴
   };
+
+  const fetchMembers = () => {
+    setIsLoading(true); // 로딩 상태 시작
+    getAttendanceList({ page, size, searchTerm, searchField,startDate,endDate }).then((data) => {
+      console.log(data);
+      setServerData(data);
+      setIsLoading(false); // 로딩 상태 종료
+    });
+  };
+
+  useEffect(() => {
+    fetchMembers();
+  }, [page, size, refresh]);
 
   const getStatusText = (status) => {
     switch (status) {
@@ -85,10 +67,23 @@ const AdminAttendanceComponent = () => {
 
   return (
     <div className={style.member_search_area2}>
-      <div className={style.search_form2}>
-
-
+      <div className={style.search_form}>
         <div className={style.search_item2}>
+          {/* 시작 날짜 선택 */}
+          <input
+            className={style.pl}
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)} // 시작 날짜 변경
+          />
+          <span className={style.dateSeparator}> - </span>
+          {/* 종료 날짜 선택 */}
+          <input
+            className={style.pl}
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)} // 종료 날짜 변경
+          />
           <select
             name="search"
             className={style.pl}
@@ -139,7 +134,7 @@ const AdminAttendanceComponent = () => {
             <tbody>
               {serverData.dtoList.map((memberData, index) => (
                 <tr key={memberData.eid}>
-                  <td>{index + 1}</td>
+                  <td>{(serverData.current - 1) * size + index + 1}</td>
                   <td>{memberData.eid}</td>
                   <td>{memberData.name}</td>
                   <td>{memberData.department}</td>
@@ -172,7 +167,6 @@ const AdminAttendanceComponent = () => {
           />
         </>
       )}
-
     </div>
   );
 };
