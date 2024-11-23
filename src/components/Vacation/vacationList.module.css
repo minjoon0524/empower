@@ -1,41 +1,30 @@
+
 .tableContainer {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-   
-    padding-top: 50px;}
-
-    /* border-collapse: separate;
-    border-spacing: 0;
-    padding-top: 50px;
-    padding-left: 100px;
-    padding-right: 100px;
-    width: 80%; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 
 
-
-  
-  
   .table {
     width: 100%;
     overflow-x: auto;
     border-collapse: collapse;
-    /* min-width: 100%; */
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
   .tableHeader {
     background-color: #f8f9fa;
-  
   }
   
   .headerCell {
-
     padding: 12px 16px;
     text-align: center;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     color: #6b7280;
     text-transform: uppercase;
@@ -56,9 +45,9 @@
   }
   
   .tableCell {
-    padding: 12px 16px;
-    font-size: 14px;
-    color: #111827;
+    padding: 10px 10px;
+    font-size: 12px;
+    color: #000000;
     white-space: nowrap;
     text-align: center;
   }
@@ -70,35 +59,40 @@
   
   .buttonContainer {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+   
   }
   
-  .button {
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
+
+  .ap_rj_button{
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border-radius: 0.375rem;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
-    border: none;
-    transition: all 0.2s;
   }
   
   .approveButton {
-    background-color: #0EA5E9;
-    color: white;
+    background-color: white;
+    color: #000000;
   }
   
   .approveButton:hover {
-    background-color: #0284C7;
+    background-color: #e0e7ff;
   }
   
   .rejectButton {
-    background-color: #EF4444;
-    color: white;
+    background-color: #001e46;
+    color:white;
+
   }
   
   .rejectButton:hover {
-    background-color: #DC2626;
+    background-color: #053168;
   }
   
   .statusBadge {
@@ -158,12 +152,14 @@
   .pageLink:hover {
     background-color: #eaeaed;
     border-color: #c6c9cc;
+    cursor: pointer;
   }
   
   .active .pageLink {
     background-color: #42444e;
     color: white;
     border-color: #42444e;
+
   }
   
   .active .pageLink:hover {
@@ -182,13 +178,7 @@
 }
 
 .filterContainer button {
-    /* padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin: 0 5px; /* 버튼 간격 */
+
     transition: background-color 0.3s ease; 
     padding: 1.3em 3em;
     font-size: 12px;
@@ -217,3 +207,102 @@
 .filterContainer button.active {
   background-color: #e0e7ff; 
 }
+
+
+.search_form {
+width: 86%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  /* padding-left: 240px;
+  padding-right: 240px; */
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2에 해당하는 값 */
+  padding: 1rem; /* p-4에 해당하는 값 */
+
+}
+.search_item {
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.search_item  option{
+  font-size: 12px;
+}
+
+
+.search_item2 {
+  width: 1060px;
+  padding: 3px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pl {
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 12px; 
+  margin-left: 6px;
+
+}
+
+
+.add_person_btn {
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 13px; 
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    color 0.3s ease;
+  cursor: pointer;
+  /* border: 1px solid #202936; */
+  color: #fff;
+  background-color: #202936;
+
+}
+
+.add_person_btn:hover {
+  border-color: #666;
+  background-color: #42444e;
+  color: #fff;
+}
+
+.search_btn {
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 13px; /* text-sm */
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    color 0.3s ease;
+  cursor: pointer;
+}
+
+.search_btn:hover {
+  border-color: #202936;
+  background-color: #202936;
+  color: #fff;
+}
+.member_input {
+  padding: 0.5rem 0.75rem; /* px-3, py-2 */
+  border: 1px solid #ddd; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+
+}
+

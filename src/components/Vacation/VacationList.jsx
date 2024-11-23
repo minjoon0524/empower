@@ -161,11 +161,25 @@ const VacationList = () => {
 
   return (
     <div className={styles.tableContainer}>
-      <div className={styles.filterContainer}>
-        <button onClick={() => setFilter("ALL")}>전체</button>
-        <button onClick={() => setFilter("PENDING")}>대기</button>
-        <button onClick={() => setFilter("APPROVE")}>승인</button>
-        <button onClick={() => setFilter("REJECT")}>거절</button>
+      <div className={styles.search_form}>
+        <select className={styles.pl} onChange={(e) => setFilter(e.target.value)} value={filter}>
+          <option value="ALL">전체</option>
+          <option value="PENDING">대기</option>
+          <option value="APPROVE">승인</option>
+          <option value="REJECT">거절</option>
+        </select>
+        <div className={styles.search_item}>
+          <input
+            type="text"
+            className={styles.member_input}
+            placeholder="검색어 입력"
+            // value={searchTerm}
+            // onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <a className={styles.search_btn} >
+            검색
+          </a>
+        </div>
       </div>
 
       <div>
@@ -233,6 +247,7 @@ const VacationList = () => {
             {filteredData.map((row) => (
               <tr key={row.vacId} className={styles.tableRow}>
                 <td
+                style={{ cursor: 'pointer'}}
                   className={styles.tableCell}
                   onClick={() => moveToRead(row.vacId)}
                 >
@@ -254,13 +269,13 @@ const VacationList = () => {
                   {row.vacStatus === "PENDING" && (
                     <div className={styles.buttonContainer}>
                       <button
-                        className={`${styles.button} ${styles.approveButton}`}
+                        className={`${styles.ap_rj_button} ${styles.approveButton}`}
                         onClick={() => handleApprove(row.vacId)}
                       >
                         승인
                       </button>
                       <button
-                        className={`${styles.button} ${styles.rejectButton}`}
+                        className={`${styles.ap_rj_button} ${styles.rejectButton}`}
                         onClick={() => handleReject(row.vacId)}
                       >
                         거절
