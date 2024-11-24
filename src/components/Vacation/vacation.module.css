@@ -1,7 +1,7 @@
 .container {
 
     margin: 0 auto;
-    /* margin-top: 40px; */
+    margin-top: 40px;
     padding: 24px;
     background-color: white;
     width: 80%;
@@ -27,8 +27,9 @@
   }
   
   .label {
+    color: #000000;
     font-size: 14px;
-    font-weight: 500;
+    
   }
   
   .select,
