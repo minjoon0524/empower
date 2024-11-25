@@ -230,7 +230,6 @@ const VacationList = () => {
           <input
             type="text"
             className={styles.member_input}
-            placeholder="검색어 입력"
           />
           <a className={styles.search_btn}>검색</a>
         </div>
