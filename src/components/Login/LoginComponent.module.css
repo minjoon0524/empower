@@ -31,15 +31,17 @@ body{
     line-height: 52px;
     border: 1px solid #E6E8EB;
     border: none;
-    background-color: #118DFF;
+    background-color: #001e46;
     color: #fff;
     margin-top: 20px;
     font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     
 }
 
 .btn_submit:hover{
-    background-color: #1086f2;
+    background-color: #022e67;
 }
 
 .show_password{

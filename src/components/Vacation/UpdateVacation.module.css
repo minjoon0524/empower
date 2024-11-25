@@ -1,10 +1,7 @@
 .container {
   width: auto;
-  /* max-width: 32rem; */
-  padding: 3.5rem;
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 3.5rem 2.5rem 3.5rem;
+
 }
 
 .title {

@@ -13,6 +13,7 @@ import {
   faPhone,
   faRankingStar,
 } from "@fortawesome/free-solid-svg-icons";
+import AlertModal from '../../../modal/AlertModal';
 
 const initState = {
   eid: "",
@@ -23,6 +24,7 @@ const initState = {
   address: "",
   position: "",
   hireDate: "",
+  profileName: ""
 };
 
 const UpdateMemberComponent = ({ eid }) => {
@@ -32,6 +34,7 @@ const UpdateMemberComponent = ({ eid }) => {
   const loginInfo = useSelector((state) => state.loginSlice);
   const { moveToList } = useCustomMove();
   const [imagePreview, setImagePreview] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   const uploadRef = useRef();
 
@@ -43,17 +46,16 @@ const UpdateMemberComponent = ({ eid }) => {
 
   const handleChange = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
-    console.log(member)
   };
 
   const handleModify = () => {
     const file = uploadRef.current.files[0]; // 선택된 파일 가져오기
-    console.log(file)
     modifyMember(member.eid, member, file).then((result) => {
       setResult("수정되었습니다.");
-      alert("수정되었습니다.");
-      console.log(result)
-      moveToList();
+      setIsModalOpen(true); // 모달 열기
+      setTimeout(() => { // 일정 시간 후에 이동
+        moveToList();
+      }, 2000); // 2초 후에 이동
     });
   };
 
@@ -63,10 +65,13 @@ const UpdateMemberComponent = ({ eid }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
-        
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -80,9 +85,7 @@ const UpdateMemberComponent = ({ eid }) => {
             <li>
               <div className={styles.myphoto}>
                 <img
-         
-                    src={`http://localhost/member/profile/${member.profileImagePath}`}
-             
+                  src={`http://localhost/member/profile/${member.profileImagePath}`}
                   width="56"
                   height="56"
                   alt="프로필 이미지"
@@ -214,6 +217,14 @@ const UpdateMemberComponent = ({ eid }) => {
           취소
         </button>
       </div>
+
+      {/* 수정 완료 모달 */}
+      <AlertModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        title="수정 완료"
+        message="수정되었습니다."
+      />
     </div>
   );
 };
