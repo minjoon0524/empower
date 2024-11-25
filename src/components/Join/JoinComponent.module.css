@@ -1,132 +1,123 @@
-body{
-    background-color: #F9FAFC;
+body {
+  background-color: #f9fafc;
 }
 
 .container {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-     /* 뷰포트 높이 100% */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-    
+  /* 뷰포트 높이 100% */
 }
 
-.title{
-    margin: 11px 0 40px;
-    font-weight: 400;
-    overflow-wrap: break-word;
-    font-size: 19px;
-   line-height: 0px;
-    
+.title {
+  margin: 11px 0 40px;
+  font-weight: 400;
+  overflow-wrap: break-word;
+  font-size: 19px;
+  line-height: 0px;
 }
 
-.btn_submit{
-    height: 52px;
-    width: 405px;
-    border-radius: 8px;
-    font-size: 15px;
-    background-color: #fff;
-    color: #202124;
-    line-height: 52px;
-    border: 1px solid #E6E8EB;
-    border: none;
-    background-color: #118DFF;
-    color: #fff;
-    margin-top: 20px;
-    font-weight: 700;
-    
+.btn_submit {
+  height: 52px;
+  width: 405px;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fff;
+  color: #202124;
+  line-height: 52px;
+  border: 1px solid #e6e8eb;
+  border: none;
+  background-color: #001e46;
+  color: #fff;
+  margin-top: 20px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.btn_submit:hover{
-    background-color: #1086f2;
+.btn_submit:hover {
+  background-color: #022e67;
 }
 
-.show_password{
-    margin-top: 10px;
-    padding: 12px 16px;
-    width: 400px;
-    
+.show_password {
+  margin-top: 10px;
+  padding: 12px 16px;
+  width: 400px;
 }
 
 .input_cover {
-    display: flex;
-    height: 48px;
-    padding: 12px 16px;
-    border: 1px solid #DBDEE1;
-    border-radius: 8px;
-    align-items: center;
-    box-sizing: border-box;
-    margin-top: 20px;
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #dbdee1;
+  border-radius: 8px;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 20px;
 }
 
 .input_cover:focus-within {
-    border-color: #1086f2;
+  border-color: #1086f2;
 }
 
 .input {
-    border: none;
-    outline: none;
-    width: 370px;
-    height: 100%;
-    padding: 0;
-    font-size: 16px;
+  border: none;
+  outline: none;
+  width: 370px;
+  height: 100%;
+  padding: 0;
+  font-size: 16px;
 }
 
-
-.logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.contents{
-    width: 430px;
-    height: 630px;
-    padding: 30px 0px 50px;
-    /* box-shadow: 0px 3px 8px 0px #0000001A; */
-    border-radius: 16px;
-   
+.contents {
+  width: 430px;
+  height: 630px;
+  padding: 30px 0px 50px;
+  /* box-shadow: 0px 3px 8px 0px #0000001A; */
+  border-radius: 16px;
 }
 
-.back_login{
-    margin-top: 20px;
-    font-size: 15px;
-    color: #118DFF;
-    line-height: 24px;
-    font-weight: 700;
-    cursor: pointer;
-   
+.back_login {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #001e46;
+  line-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.close_btn{
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
+.close_btn {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
 .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-   
-    align-items: center;
-    justify-content: center;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
 
 .modalContent {
-    background-color: white;
-    width: 430px;
-    height: 630px;
-    padding: 10px 50px 50px;
-    /* box-shadow: 0px 3px 8px 0px #0000001A; */
-    border-radius: 16px;
-    /* border: none; */
-  }
-  
+  background-color: white;
+  width: 430px;
+  height: 630px;
+  padding: 10px 50px 50px;
+  /* box-shadow: 0px 3px 8px 0px #0000001A; */
+  border-radius: 16px;
+  /* border: none; */
+}
