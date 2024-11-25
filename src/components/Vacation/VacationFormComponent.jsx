@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import styles from "./vacation.module.css";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { registerVacation } from "../../api/vacationApi";
-import { ClipLoader } from "react-spinners";
-const Loading = (
-  <div style={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    width: '100vw',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)'
-  }}>
-    <ClipLoader color="#36D7B7" size={50} />
-  </div>)
+import ToastModal from './../../modal/ToastModal';
+import useCustomMove from "../../hooks/useCustomMove";
+const Loader = lazy(() => import("../Loader/Loader"));
+
 
 const initState = {
   eid: "",
@@ -29,10 +18,13 @@ const initState = {
 function VacationFormComponent() {
   
   const { loginState } = useCustomLogin();
+  const {moveToMyVacationList}=useCustomMove()
   const [serverData, setServerData] = useState(initState);
   const [reason, setReason] = useState("");
   const [totalDays, setTotalDays] = useState(0);
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const [isToastVisible, setIsToastVisible] = useState(false); // ToastModal 가시성 상태 추가
+  const [toastMessage, setToastMessage] = useState(""); // Toast 메시지 상태 추가
 
   const handleChangeVacation = (e) => {
     serverData.vacType="GENERAL"
@@ -58,6 +50,17 @@ function VacationFormComponent() {
     }
   };
 
+  const showToast = (message) => {
+    setToastMessage(message); // 메시지를 설정
+    setIsToastVisible(true); // 토스트 표시
+    setLoading(false); // 로딩 종료
+
+    // 3초 후 자동으로 닫기
+    setTimeout(() => {
+        setIsToastVisible(false);
+    }, 3000);
+  };
+
   const handleClickAdd = (e) => {
     e.preventDefault();
     if (
@@ -66,24 +69,27 @@ function VacationFormComponent() {
       !serverData.vacDescription ||
       !serverData.vacType
     ) {
-      alert("모든 필드를 채워주세요.");
+      setLoading(false); // 에러 발생 시 로딩 종료
+      showToast("모든 필드를 채워주세요."); // 오류 메시지 설정
       return;
     }
     setLoading(true); // 로딩 시작
     registerVacation(serverData).then((data) => {
       setLoading(false); // 로딩 종료
       console.log(data);
-      alert("휴가신청이 완료되었습니다.");
-      // 내 휴가 신청 내역으로 이동할 수 있게 구성
+      showToast("휴가 신청이 완료되었습니다."); // 성공 메시지 설정
+      setTimeout(() => {
+        moveToMyVacationList();
+      }, 1000); // 3초 후 이동
     }).catch(() => {
       setLoading(false); // 에러 발생 시 로딩 종료
-      alert("휴가 신청 중 오류가 발생했습니다.");
+      showToast("휴가 신청 중 오류가 발생했습니다."); // 오류 메시지 설정
     });
   };
 
   return (
     <div className={styles.container}>
-      {loading && Loading} {/* 로딩 상태에 따라 로딩 컴포넌트 표시 */}
+      {loading && Loader} {/* 로딩 상태에 따라 로딩 컴포넌트 표시 */}
       <form className={styles.form}>
         {/* 휴가 종류 */}
         <div className={styles.formGroup}>
@@ -145,7 +151,7 @@ function VacationFormComponent() {
           <input
             type="file"
             onChange={(e) => setReason(e.target.files[0])}
-            className={styles.input}
+            className={`${styles.input} ${styles.inputFile}`} // 커스텀 스타일 추가
           />
         </div>
 
@@ -154,6 +160,7 @@ function VacationFormComponent() {
           휴가 신청
         </button>
       </form>
+      <ToastModal isToastVisible={isToastVisible} setIsToastVisible={setIsToastVisible} toastMessage={toastMessage} /> {/* ToastModal 추가 */}
     </div>
   );
 }
