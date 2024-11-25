@@ -3,74 +3,103 @@ body {
   font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light",
     "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
 }
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  padding-top: 30px;
-  padding-left: 100px;
-  padding-right: 100px;
+.memberSearchTable {
+  border-collapse: collapse;
   width: 100%;
+
+
 }
-th,
-td {
+.memberSearchTable th,
+.memberSearchTable td {
+  line-height: 24px; /* 고정된 행 간격을 설정 */
   padding: 6px 15px;
+  text-align: center;
 }
-th {
+.memberSearchTable th {
   background: #42444e;
   color: #fff;
-  text-align: left;
-}
-tr:first-child th:first-child {
-  border-top-left-radius: 6px;
-}
-tr:first-child th:last-child {
-  border-top-right-radius: 6px;
-}
-td {
-  border-right: 1px solid #c6c9cc;
-  border-bottom: 1px solid #c6c9cc;
-}
-td:first-child {
-  border-left: 1px solid #c6c9cc;
-}
-tr:nth-child(even) td {
-  background: #eaeaed;
-}
-tr:last-child td:first-child {
-  border-bottom-left-radius: 6px;
-}
-tr:last-child td:last-child {
-  border-bottom-right-radius: 6px;
+  /* border: 1px solid #c6c9cc; */
+  /* color: #000000; */
+  font-size: 13px;
+
+  /* border-bottom: 1px solid #22223b; */
 }
 
-/* pagination css */
+.memberSearchTable tr:nth-child(even) td {
+  background: #eaeaed;
+}
+.memberSearchTable tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+  
+}
+.memberSearchTable tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+.memberSearchTable td {
+  border-right: 1px solid #c6c9cc;
+  border-bottom: 1px solid #c6c9cc;
+  color: #555;
+  font-size: 13px;
+}
+.memberSearchTable td:first-child {
+  border-left: 1px solid #c6c9cc;
+}
+
+.memberSearchTable tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+.memberSearchTable tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+.memberSearchTable tr:hover {
+  transition: background-color 0.2s; 
+  background: #f0f0f0;;
+}
+
+/* 페이지네이션 CSS */
 .pagination {
   display: flex;
   list-style: none;
   padding: 0;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .pageItem {
-  margin: 0 5px;
+  margin: 0 3px;
 }
 
 .pageLink {
   text-decoration: none;
-  padding: 4px 12px;
-  border: 1px solid #ddd;
-  color: black;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border: 1px solid #c6c9cc;
+  color: #666;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
-.active {
-  background-color: #666;
+.pageLink:hover {
+  background-color: #eaeaed;
+  border-color: #c6c9cc;
+  cursor: pointer;
+}
+
+.active .pageLink {
+  background-color: #42444e;
   color: white;
+  border-color: #42444e;
+
+}
+
+.active .pageLink:hover {
+  background-color: #202936;
+
 }
 
 .breakItem {
   margin: 0 5px;
+  color: #666;
 }
 
 .member_search_area {
@@ -80,53 +109,74 @@ tr:last-child td:last-child {
   flex-direction: column;
 }
 
-.search_form {
-  /* width: 100%; */
-  width: 1070px;
+.member_search_area2 {
+
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  /* padding-left: 240px;
-  padding-right: 240px; */
+  flex-direction: column;
+}
+
+.search_form {
+  width: calc(100% - 200px); /* 사이드바 너비를 고려한 너비 설정 */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2에 해당하는 값 */
+  padding: 1rem; /* p-4에 해당하는 값 */
+
 }
 .search_item {
   padding: 3px;
   display: flex;
   align-items: center;
+  font-size: 12px;
+}
+
+.search_item  option{
+  font-size: 12px;
+}
+
+
+.search_item2 {
+  width: 1060px;
+  padding: 3px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .pl {
-  width: 110px;
-  border: 1px solid #c4c4c4;
-  box-sizing: border-box;
-  border-radius: 10px;
-  padding: 12px 13px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 12px; 
+  margin-left: 6px;
+
 }
 
-.pl:focus {
-  border: 1px solid #666;
-  box-sizing: border-box;
-  border-radius: 10px;
-  outline: 3px solid #666;
-  border-radius: 10px;
-}
+
 
 .add_person_btn {
-  width: 100px;
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 13px; 
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    color 0.3s ease;
   cursor: pointer;
-  text-decoration: none;
-  font-size: 14px;
-  border-radius: 8px;
-  padding: 12px 12px;
-  text-align: center;
-  border: 1px solid #202936;
+  /* border: 1px solid #202936; */
   color: #fff;
   background-color: #202936;
-  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
 }
 
 .add_person_btn:hover {
@@ -136,38 +186,29 @@ tr:last-child td:last-child {
 }
 
 .search_btn {
-  width: 200px;
-  height: 100px;
+  padding-left: 0.75rem; /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  border: 1px solid #ccc; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 13px; /* text-sm */
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    color 0.3s ease;
   cursor: pointer;
-  text-decoration: none;
-  font-size: 14px;
-  /* font-weight: 400; */
-  /* line-height: 1; */
-  /* letter-spacing: -.5px; */
-  border-radius: 8px;
-  padding: 12px 12px;
-  text-align: center;
-  border: 1px solid #202936;
-  color: #202936;
-  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.search_btn:hover{
+.search_btn:hover {
   border-color: #202936;
-        background-color: #202936;
-        color: #fff;
+  background-color: #202936;
+  color: #fff;
 }
 .member_input {
-  /* width: 400px; */
-  background-color: #ffffff;
-  border: 1px solid #69727d;
-  border-color: #d4d8dc;
-  border-radius: 8px 8px 8px 8px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.75em;
-  letter-spacing: -0.5px;
-  padding: 6px 20px;
+  padding: 0.5rem 0.75rem; /* px-3, py-2 */
+  border: 1px solid #ddd; /* border */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+
 }
 
 .loader {
@@ -175,7 +216,7 @@ tr:last-child td:last-child {
   height: 48px;
   border-radius: 50%;
   position: relative;
-  animation: rotate 2s linear infinite
+  animation: rotate 2s linear infinite;
 }
 .loader::before {
   content: "";
@@ -183,18 +224,35 @@ tr:last-child td:last-child {
   position: absolute;
   inset: 0px;
   border-radius: 50%;
-  border: 5px solid #FFF;
-  animation: prixClipFix 3s linear infinite ;
+  border: 5px solid #fff;
+  animation: prixClipFix 3s linear infinite;
 }
 
 @keyframes rotate {
-  100%   {transform: rotate(360deg)}
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes prixClipFix {
-    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
-    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
+.dateSeparator {
+
+  margin: 5px 5px 5px 10px; /* 상우하좌*/
+  color: #333; /* 색상 설정 */
 }

@@ -33,7 +33,7 @@ const LoginComponent = () => {
         alert("사번과 비밀번호를 확인해주세요.")
       }else{
         alert("환영합니다.")
-        moveToPath("/main")
+        moveToPath("/member/attendance/read")
       }
     })
   };

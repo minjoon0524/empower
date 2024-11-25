@@ -60,12 +60,6 @@ const MemberSearchComponent = () => {
     <div className={style.member_search_area}>
       <div className={style.search_form}>
         <div className={style.search_item}>
-          <a className={style.add_person_btn} onClick={openModal}>
-            사원추가
-          </a>
-        </div>
-
-        <div className={style.search_item}>
           <select
             name="search"
             className={style.pl}
@@ -75,7 +69,7 @@ const MemberSearchComponent = () => {
             <option value="name">이름</option>
             <option value="department">부서</option>
             <option value="position">직급</option>
-            <option value="email">이메일</option>
+            <option value="eid">사번</option>
             <option value="tel">전화번호</option>
           </select>
           <div className={style.search_item}>
@@ -90,6 +84,10 @@ const MemberSearchComponent = () => {
             <a className={style.search_btn} onClick={handleSearch}>
               검색
             </a>{" "}
+
+            <a className={style.add_person_btn} onClick={openModal}>
+            사원추가
+          </a>
             {/* 검색 버튼 클릭 시 검색 */}
           </div>
         </div>
@@ -101,28 +99,27 @@ const MemberSearchComponent = () => {
         </div>
       ) : (
         <>
-          <table>
+          <table style={{ width: "84%" }} className={style.memberSearchTable}>
             <thead>
               <tr>
-                <th>이름</th>
-                <th>부서</th>
-                <th>직급</th>
-                <th>이메일</th>
-                <th>전화번호</th>
-                <th>수정</th>
+              <th style={{ width: "30px" }}>번호</th>
+                <th style={{ width: "60px" }}>이름</th>
+                <th style={{ width: "60px" }}>부서</th>
+                <th style={{ width: "60px" }}>직급</th>
+                <th style={{ width: "90px" }}>사번</th>
+                <th style={{ width: "90px" }}>전화번호</th>
+               
               </tr>
             </thead>
             <tbody>
-              {serverData.dtoList.map((member) => (
+              {serverData.dtoList.map((member,index) => (
                 <tr key={member.eid} onClick={() => moveToRead(member.eid)}>
+              <td>{(serverData.current - 1) * size + index + 1}</td>
                   <td>{member.name}</td>
                   <td>{member.department}</td>
                   <td>{member.position}</td>
-                  <td>{member.email}</td>
+                  <td>{member.eid}</td>
                   <td>{member.phone}</td>
-                  <td>
-                    <a>수정</a>
-                  </td>
                 </tr>
               ))}
             </tbody>
