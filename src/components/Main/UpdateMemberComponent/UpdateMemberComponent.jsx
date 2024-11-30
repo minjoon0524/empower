@@ -84,12 +84,21 @@ const UpdateMemberComponent = ({ eid }) => {
           <ul className={styles.myinfo_area}>
             <li>
               <div className={styles.myphoto}>
-                <img
-                  src={`http://localhost/member/profile/${member.profileImagePath}`}
-                  width="56"
-                  height="56"
-                  alt="프로필 이미지"
-                />
+                {imagePreview ? (
+                  <img
+                    src={imagePreview}
+                    width="56"
+                    height="56"
+                    alt="미리보기 이미지"
+                  />
+                ) : (
+                  <img
+                    src={`http://localhost/member/profile/${member.profileImagePath}`}
+                    width="56"
+                    height="56"
+                    alt="프로필 이미지"
+                  />
+                )}
                 <input
                   type={"file"}
                   ref={uploadRef}

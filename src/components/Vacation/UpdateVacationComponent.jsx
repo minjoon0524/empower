@@ -3,6 +3,7 @@ import styles from "./UpdateVacation.module.css";
 import { deleteVacation, getMemberVacation, updateVacation } from "../../api/vacationApi";
 import { useNavigate, useParams } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
+import ConfirmationModal from "../../modal/ConfirmationModal";
 
 const initState = {
   eid: "",
@@ -20,24 +21,34 @@ const initState = {
 const UpdateVacationComponent = () => {
   const { vacId } = useParams();
   const [vacation, setVacation] = useState(initState);
-  const { moveToRead } = useCustomMove();
+  const { moveToRead,moveToVacationList } = useCustomMove();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
- const handleClickModify = () => {
-
-  
-  updateVacation(vacId,vacation).then((data)=>{
-    
-    console.log(data)
-    alert("수정되었습니다.");
-    moveToRead(vacId)
-  })
-
-}
+  const handleClickModify = () => {
+    setModalType("modify");
+    setIsModalOpen(true);
+  };
 
   const handleDelete = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
+    setModalType("delete");
+    setIsModalOpen(true);
+  };
+
+  const confirmAction = () => {
+    if (modalType === "delete") {
       deleteVacation(vacId).then((data) => {
         console.log(data);
+        setIsModalOpen(false);
+        moveToVacationList()
+      });
+    } else if (modalType === "modify") {
+      updateVacation(vacId, vacation).then((data) => {
+        console.log(data);
+        setSuccessMessage("수정되었습니다.");
+        setIsModalOpen(false);
+        moveToRead(vacId)
       });
     }
   };
@@ -47,9 +58,9 @@ const UpdateVacationComponent = () => {
     console.log(vacation);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     getMemberVacation(vacId).then((data) => {
-      setVacation(data); // data를 사용하여 vacation 상태를 업데이트
+      setVacation(data);
       console.log(data);
     });
   }, [vacId]);
@@ -133,7 +144,7 @@ const UpdateVacationComponent = () => {
         <div className={styles.bottomButtonGroup}>
           <button
             className={`${styles.button} ${styles.editButton}`}
-            onClick={()=>handleClickModify(vacId,vacation)}
+            onClick={handleClickModify}
           >
             수정
           </button>
@@ -146,6 +157,20 @@ const UpdateVacationComponent = () => {
         </div>
       )}
 
+      <ConfirmationModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmAction}
+        title={modalType === "delete" ? "삭제 확인" : "수정 확인"}
+        message={modalType === "delete" ? "정말로 삭제하시겠습니까?" : "수정을 진행하시겠습니까?"}
+      />
+
+      <ConfirmationModal
+        open={!!successMessage}
+        onClose={() => setSuccessMessage("")}
+        title="수정 완료"
+        message={successMessage}
+      />
     </div>
   );
 };
