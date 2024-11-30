@@ -13,6 +13,9 @@ const AlertModal = ({ open, onClose, title, message }) => {
           <button onClick={onClose} className={styles.modalButtonConfirm}>
             확인
           </button>
+          <button onClick={onClose} className={styles.modalButtonConfirm}>
+            취소
+          </button>
         </div>
       </div>
     </div>
