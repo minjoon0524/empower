@@ -25,9 +25,9 @@ const AdminAttendanceComponent = () => {
   const [searchField, setSearchField] = useState("name"); // 검색 옵션
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   // 오늘 날짜를 기본값으로 설정
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today); // 시작 날짜
-  const [endDate, setEndDate] = useState(today); // 종료 날짜
+  // const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState(); // 시작 날짜
+  const [endDate, setEndDate] = useState(); // 종료 날짜
 
   const handlePageClick = ({ selected }) => {
     moveToAttendanceList({ page: selected + 1, size });
@@ -35,6 +35,7 @@ const AdminAttendanceComponent = () => {
 
   const handleSearch = () => {
     fetchMembers(); // 검색어와 날짜에 따라 멤버 목록 새로 가져옴
+    setSearchTerm("")
   };
 
   const fetchMembers = () => {
@@ -93,7 +94,7 @@ const AdminAttendanceComponent = () => {
             <option value="name">이름</option>
             <option value="department">부서</option>
             <option value="position">직급</option>
-            <option value="email">이메일</option>
+            <option value="eid">사원ID</option>
             <option value="tel">전화번호</option>
           </select>
           <div className={style.search_item}>
@@ -122,8 +123,8 @@ const AdminAttendanceComponent = () => {
           <table style={{ width: "84%" }} className={style.memberSearchTable}>
             <thead>
               <tr>
-                <th>번호</th>
-                <th>직원 ID</th>
+                <th>No.</th>
+                <th>IDNO</th>
                 <th>이름</th>
                 <th>부서</th>
                 <th>출근 시간</th>
