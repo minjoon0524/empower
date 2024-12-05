@@ -121,7 +121,7 @@
 /* 증명서 첨부 input 스타일 적용 */
   .inputFile {
     padding: 5px;
-    font-size: 13px;
+    font-size: 11px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background-color: #f9f9f9;
@@ -129,15 +129,19 @@
 }
 
 .inputFile::file-selector-button {
-    background-color: #001e46;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  padding: 8px;
+  background-color: #001e46;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+
+  
 }
 
 .inputFile::file-selector-button:hover {
     background-color: #032d65;
 }
+

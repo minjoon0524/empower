@@ -13,7 +13,7 @@
     width: 100%;
     overflow-x: auto;
     border-collapse: collapse;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
   .tableHeader {
@@ -37,6 +37,7 @@
   
   .tableRow {
     border-bottom: 1px solid #e5e7eb;
+    height: 50px;
   }
   
   .tableRow:hover {
@@ -49,6 +50,7 @@
     color: #000000;
     white-space: nowrap;
     text-align: center;
+    min-width: 60px;
   }
   
   .sortIcon {
@@ -59,7 +61,7 @@
   .buttonContainer {
     display: flex;
     gap: 5px;
-   
+    justify-content: center;
   }
   
 
