@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCalendar, faPlane, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import style from "./Menu.module.css";
+import useCustomLogin from "../hooks/useCustomLogin";
 
 const TreeItem = ({ label, children, isOpen, onToggle, icon, isActive }) => {
   return (
@@ -30,6 +31,7 @@ const CategoryMenu = () => {
     attendanceManagement: false,
     vacationManagement: false,
   });
+  const {loginState}=useCustomLogin()
 
   const [activeItem, setActiveItem] = useState(null);
 
@@ -71,6 +73,7 @@ const CategoryMenu = () => {
               icon={<FontAwesomeIcon icon={faUser} className={style.icon} />}
               isActive={activeItem === "hrManagement"}
             >
+             
               <Link to="/member/search" className={`${style.subItem} ${activeItem === "hrManagement" ? style.activeSubItem : ''}`}>
                 직원조회
               </Link>
@@ -84,12 +87,23 @@ const CategoryMenu = () => {
               icon={<FontAwesomeIcon icon={faCalendar} className={style.icon} />}
               isActive={activeItem === "attendanceManagement"}
             >
-              <Link to="/member/attendance/list" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
-                근태관리(관리자)
-              </Link>
-              <Link to="/member/attendance/read" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
-                근태관리
-              </Link>
+               {loginState?.roleNames[0] === "ADMIN" ? (
+                 <>
+                   <Link to="/member/attendance/list" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
+                     근태관리(관리자)
+                   </Link>
+                   <Link to="/member/attendance/read" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
+                     근태관리
+                   </Link>
+                 </>
+               ) : (
+                 <>
+            
+                   <Link to="/member/attendance/read" className={`${style.subItem} ${activeItem === "attendanceManagement" ? style.activeSubItem : ''}`}>
+                     근태관리
+                   </Link>
+                 </>
+               )}
             </TreeItem>
           </li>
           <li className={style.item}>
@@ -100,7 +114,10 @@ const CategoryMenu = () => {
               icon={<FontAwesomeIcon icon={faPlane} className={style.icon} />}
               isActive={activeItem === "vacationManagement"}
             >
-              <Link to="/vacation/form" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+
+{loginState?.roleNames[0] === "ADMIN" ? (
+                 <>
+     <Link to="/vacation/form" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
                 휴가신청
               </Link>
               <Link to="/vacation/list" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
@@ -109,6 +126,19 @@ const CategoryMenu = () => {
               <Link to="/vacation/myList" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
                 휴가신청내역
               </Link>
+                 </>
+               ) : (
+                 <>
+                 <Link to="/vacation/form" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+                휴가신청
+              </Link>
+            <Link to="/vacation/myList" className={`${style.subItem} ${activeItem === "vacationManagement" ? style.activeSubItem : ''}`}>
+                휴가신청내역
+              </Link>
+                 </>
+               )}
+
+             
             </TreeItem>
           </li>
         </ul>
