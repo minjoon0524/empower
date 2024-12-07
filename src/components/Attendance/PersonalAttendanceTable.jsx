@@ -3,7 +3,7 @@ import styles from "./Attendance.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-const PersonalAttendanceTable = ({ member,memberList }) => {
+const PersonalAttendanceTable = ({ member, memberList }) => {
   const getStatusText = (status) => {
     switch (status) {
       case "CHECKED_IN":
@@ -20,7 +20,7 @@ const PersonalAttendanceTable = ({ member,memberList }) => {
   };
 
   const groupByYearMonth = (attendanceData) => {
-    console.log(attendanceData)
+    console.log(attendanceData);
     return attendanceData.reduce((acc, curr) => {
       const date = new Date(curr.checkInTime);
       const yearMonth = `${date.getFullYear()}-${date.getMonth() + 1}`;
@@ -29,7 +29,7 @@ const PersonalAttendanceTable = ({ member,memberList }) => {
         acc[yearMonth] = [];
       }
       acc[yearMonth].push(curr);
-  
+
       return acc;
     }, {});
   };
@@ -39,7 +39,7 @@ const PersonalAttendanceTable = ({ member,memberList }) => {
   return (
     <div className={styles.memberCard}>
       {Object.keys(groupedData)
-        .filter((yearMonth) => yearMonth.endsWith('-11'))
+        .filter((yearMonth) => yearMonth.endsWith("-11"))
         .map((yearMonth) => (
           <div key={yearMonth}>
             <div className={styles.cal_area}>
@@ -47,7 +47,7 @@ const PersonalAttendanceTable = ({ member,memberList }) => {
               <h3 className={styles.cal}>{yearMonth}</h3>
               <FontAwesomeIcon icon={faArrowRight} />
             </div>
-            
+
             <table className={styles.memberTable}>
               <thead>
                 <tr>
@@ -67,8 +67,16 @@ const PersonalAttendanceTable = ({ member,memberList }) => {
                     <td>{memberData.eid}</td>
                     <td>{memberData.name}</td>
                     <td>{memberData.department}</td>
-                    <td>{memberData.checkInTime}</td>
-                    <td>{memberData.checkOutTime}</td>
+                    <td>
+                      {memberData.checkInTime
+                        ? memberData.checkInTime
+                        : "미등록"}
+                    </td>
+                    <td>
+                      {memberData.checkOutTime
+                        ? memberData.checkOutTime
+                        : "미등록"}
+                    </td>
                     <td>{getStatusText(memberData.status)}</td>
                   </tr>
                 ))}
