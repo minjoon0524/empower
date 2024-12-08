@@ -9,7 +9,7 @@ const useCustomMove = () => {
   const navigate = useNavigate();
   const [queryParams] = useSearchParams();
 
-  const [refresh, setRefresh] = useState(false) //추가
+  const [refresh, setRefresh] = useState(false); //추가
 
   const getNum = (param, defaultValue) => {
     if (!param) {
@@ -37,13 +37,20 @@ const useCustomMove = () => {
       queryStr = queryDefault;
     }
 
-    setRefresh(!refresh)
+    setRefresh(!refresh);
     navigate({ pathname: `../search`, search: `?${queryStr}` });
   };
 
-  const moveToModify = (num) => {
+  const moveToModify = (eid) => {
     navigate({
-      pathname: `../modify/${num}`,
+      pathname: `../modify/${eid}`,
+      search: `?${queryDefault}`,
+    });
+  };
+
+  const moveToModifyVacation = (vacId) => {
+    navigate({
+      pathname: `../modify/${vacId}`,
       search: `?${queryDefault}`,
     });
   };
@@ -54,7 +61,64 @@ const useCustomMove = () => {
       search: `?${queryDefault}`,
     });
   };
-  return { moveToList, moveToModify,moveToRead, page, size };
+
+  const moveToAttendanceList = (pageParam) => {
+    let queryStr = "";
+    if (pageParam) {
+      const pageNum = getNum(pageParam.page, 1);
+      const sizeNum = getNum(pageParam.size, 10);
+      queryStr = createSearchParams({
+        page: pageNum,
+        size: sizeNum,
+      }).toString();
+    }
+
+    setRefresh(!refresh);
+    navigate({ pathname: `../attendance/list`, search: `?${queryStr}` });
+  };
+
+  const moveToVacationList = (pageParam) => {
+    let queryStr = "";
+    if (pageParam) {
+      const pageNum = getNum(pageParam.page, 1);
+      const sizeNum = getNum(pageParam.size, 10);
+      queryStr = createSearchParams({
+        page: pageNum,
+        size: sizeNum,
+      }).toString();
+    }
+
+    setRefresh(!refresh);
+    navigate({ pathname: `../list`, search: `?${queryStr}` });
+  };
+
+
+  const moveToMyVacationList = (pageParam) => {
+    let queryStr = "";
+    if (pageParam) {
+      const pageNum = getNum(pageParam.page, 1);
+      const sizeNum = getNum(pageParam.size, 10);
+      queryStr = createSearchParams({
+        page: pageNum,
+        size: sizeNum,
+      }).toString();
+    }
+
+    setRefresh(!refresh);
+    navigate({ pathname: `../myList`, search: `?${queryStr}` });
+  };
+
+
+  return {
+    moveToList,
+    moveToModify,
+    moveToRead,
+    moveToAttendanceList,
+    moveToVacationList,
+    moveToMyVacationList,
+    page,
+    size,
+  };
 };
 
 export default useCustomMove;
