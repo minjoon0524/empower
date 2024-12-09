@@ -4,6 +4,8 @@ import { deleteVacation, getMemberVacation } from "../../api/vacationApi";
 import { useNavigate } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
 
+import ConfirmationModal from './../../modal/ConfirmationModal';
+
 const initState = {
   eid: "",
   memberName: "",
@@ -19,8 +21,12 @@ const initState = {
 
 const MyVacationDetailComponent = ({ vacId }) => {
   const [vacation, setVacation] = useState(initState);
-  const navigate=useNavigate()
-  const {moveToModify}=useCustomMove()
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState("");
+  const navigate = useNavigate();
+  const { moveToModify,moveToMyVacationList} = useCustomMove();
+
   useEffect(() => {
     getMemberVacation(vacId).then((data) => {
       console.log(data);
@@ -48,13 +54,19 @@ const MyVacationDetailComponent = ({ vacId }) => {
     return statuses[status] || status;
   };
 
-
-
   const handleDelete = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      // TODO: 삭제 API 호출
+    setModalType("delete");
+    setIsModalOpen(true);
+  };
+
+  const confirmAction = () => {
+    if (modalType === "delete") {
       deleteVacation(vacId).then((data) => {
         console.log(data);
+        setDeleteSuccessMessage("삭제되었습니다.");
+        setIsModalOpen(false);
+        moveToMyVacationList()
+        
       });
     }
   };
@@ -120,7 +132,7 @@ const MyVacationDetailComponent = ({ vacId }) => {
         <div className={styles.bottomButtonGroup}>
           <button
             className={`${styles.button} ${styles.editButton}`}
-            onClick={()=>moveToModify(vacId)}
+            onClick={() => moveToModify(vacId)}
           >
             수정
           </button>
@@ -132,6 +144,21 @@ const MyVacationDetailComponent = ({ vacId }) => {
           </button>
         </div>
       )}
+
+      <ConfirmationModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmAction}
+        title="삭제 확인"
+        message="정말로 삭제하시겠습니까?"
+      />
+
+      <ConfirmationModal
+        open={!!deleteSuccessMessage}
+        onClose={() => setDeleteSuccessMessage("")}
+        title="삭제 완료"
+        message={deleteSuccessMessage}
+      />
     </div>
   );
 };
