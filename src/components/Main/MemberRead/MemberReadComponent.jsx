@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { deleteMember, getMember, getProfilePhoto } from "../../../api/memberApi";
+import {
+  deleteMember,
+  getMember,
+  getProfilePhoto,
+  grantMember,
+} from "../../../api/memberApi";
 import styles from "./MemberReadComponent.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,11 +15,11 @@ import {
   faPhone,
   faRankingStar,
   faTrashAlt,
- 
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import useCustomMove from "../../../hooks/useCustomMove";
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
+import useCustomLogin from "../../../hooks/useCustomLogin";
 
 const initState = {
   eid: "",
@@ -27,10 +32,28 @@ const initState = {
   hireDate: "",
 };
 
+// 모달 컴포넌트 추가
+const ConfirmationModal = ({ open, onClose, onConfirm, title, message }) => (
+  <Modal open={open} onClose={onClose} className={styles.modal}>
+    <div className={styles.modalContent}>
+      <h2>{title}</h2>
+      <p>{message}</p>
+      <div className={styles.modalButtonArea}>
+        <button onClick={onConfirm} className={styles.modalButtonConfirm}>
+          확인
+        </button>
+        <button onClick={onClose} className={styles.modalButtonCancel}>
+          취소
+        </button>
+      </div>
+    </div>
+  </Modal>
+);
+
 const MemberReadComponent = ({ eid }) => {
   const [member, setMember] = useState(initState);
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-
+  const [modalType, setModalType] = useState(null); // 모달 타입 상태 추가
+  const { loginState } = useCustomLogin();
   const navigate = useNavigate();
   const { moveToList } = useCustomMove();
 
@@ -38,20 +61,28 @@ const MemberReadComponent = ({ eid }) => {
     navigate(`/member/modify/${member.eid}`);
   };
 
-  const handleClickDelete = () => { // 삭제 버튼 클릭 시
-    setIsModalOpen(true); // 모달 열기
+  const handleClickDelete = () => {
+    setModalType("delete"); // 삭제 모달 열기
+  };
+
+  const handleClickGrant = () => {
+    setModalType("grant"); // 권한 부여 모달 열기
   };
 
   const confirmDelete = () => {
-    deleteMember(eid).then(data => {
+    deleteMember(eid).then((data) => {
       console.log("delete result: " + data);
       moveToList();
     });
-    setIsModalOpen(false); // 모달 닫기
+    setModalType(null); // 모달 닫기
   };
 
-  const cancelDelete = () => {
-    setIsModalOpen(false); // 모달 닫기
+  const confirmGrant = () => {
+    grantMember(eid).then((data) => {
+      console.log("권한부여 결과 :", data);
+      alert("권한부여완료");
+    });
+    setModalType(null); // 모달 닫기
   };
 
   useEffect(() => {
@@ -115,7 +146,10 @@ const MemberReadComponent = ({ eid }) => {
           <li>
             <div className={`${styles.row_item} ${styles.bottom_line}`}>
               <span className={styles.item_text}>
-                <FontAwesomeIcon className={styles.icon} icon={faCalendarDays} />
+                <FontAwesomeIcon
+                  className={styles.icon}
+                  icon={faCalendarDays}
+                />
                 입사일 :{" "}
               </span>
               <span className={styles.item_text}>{member.hireDate}</span>
@@ -159,36 +193,40 @@ const MemberReadComponent = ({ eid }) => {
       </div>
 
       <div className={styles.member_submit_btn_area}>
-        <button onClick={goToModify} className={styles.btn_edit}>
-          회원 수정
-        </button>
-        <button className={styles.btn_edit} onClick={handleClickDelete}>
-          회원 삭제
-        </button>
+        <div>
+          {loginState?.roleNames[0] === "ADMIN" && (
+            <button onClick={goToModify} className={styles.btn_edit}>
+              회원 수정
+            </button>
+          )}
+          {loginState?.roleNames[0] === "ADMIN" && (
+            <button onClick={handleClickDelete} className={styles.btn_edit}>
+              회원 삭제
+            </button>
+          )}
+          {loginState?.roleNames[0] === "ADMIN" && (
+            <button onClick={handleClickGrant} className={styles.btn_edit}>
+              권한부여
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* 삭제 모달 */}
-      <Modal
-  open={isModalOpen}
-  onClose={cancelDelete}
-  className={styles.modal}
->
-  <div className={styles.modalContent}>
-
-    <h2>
-      회원 삭제 확인
-    </h2>
-    <p>정말로 이 회원을 삭제하시겠습니까?</p>
-    <div className={styles.modalButtonArea}>
-      <button onClick={confirmDelete} className={styles.modalButtonConfirm}>
-        삭제
-      </button>
-      <button onClick={cancelDelete} className={styles.modalButtonCancel}>
-        취소
-      </button>
-    </div>
-  </div>
-</Modal>
+      {/* 모달 컴포넌트 사용 */}
+      <ConfirmationModal
+        open={modalType === "delete"}
+        onClose={() => setModalType(null)}
+        onConfirm={confirmDelete}
+        title="회원 삭제 확인"
+        message="정말로 이 회원을 삭제하시겠습니까?"
+      />
+      <ConfirmationModal
+        open={modalType === "grant"}
+        onClose={() => setModalType(null)}
+        onConfirm={confirmGrant}
+        title="권한 부여 확인"
+        message="정말로 권한을 부여하시겠습니까?"
+      />
     </div>
   );
 };

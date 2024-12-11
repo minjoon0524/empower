@@ -85,12 +85,11 @@ body {
 
 .member_submit_btn_area {
  
-  padding: 0 17px;
+  padding: 0 17px 17px 17px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px auto;
-  /* margin-bottom: 100px; */
+
 }
 
 .btn_edit {
@@ -199,16 +198,4 @@ body {
   border-color: #202936;
   background-color: #202936;
   color: #fff;
-}
-
-.modalIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  border-radius: 50%;
-
-  
-  font-size: 24px;
-  margin: 0 auto 10px; /* 중앙 정렬 및 여백 */
 }
