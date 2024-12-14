@@ -6,6 +6,8 @@ import {
   checkOut,
   getOneMemberAttendance,
 } from "../../api/attendanceApi";
+import PersonalAttendanceTable from "./PersonalAttendanceTable";
+import Modal from "@mui/material/Modal";
 
 const initState = {
   eid: "",
@@ -16,9 +18,27 @@ const initState = {
   status: "",
 };
 
+const ConfirmationModal = ({ open, onClose, onConfirm, title, message }) => (
+  <Modal open={open} onClose={onClose} className={styles.modal}>
+    <div className={styles.modalContent}>
+      <h2>{title}</h2>
+      <p>{message}</p>
+      <div className={styles.modalButtonArea}>
+        <button onClick={onConfirm} className={styles.modalButtonConfirm}>
+          확인
+        </button>
+        <button onClick={onClose} className={styles.modalButtonCancel}>
+          취소
+        </button>
+      </div>
+    </div>
+  </Modal>
+);
+
 const MemberAttendanceComponent = () => {
   const { loginState } = useCustomLogin();
   const [member, setMember] = useState(initState);
+  const [memberList,setMemberList]=useState([]);
   const today = new Date();
   const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
 
@@ -26,12 +46,20 @@ const MemberAttendanceComponent = () => {
   
   const eid = loginState.eid;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState(null);
+  const [alertMessage, setAlertMessage] = useState("");
+
   useEffect(() => {
     getOneMemberAttendance(loginState.eid)
       .then((data) => {
         if (data.dtoList && data.dtoList.length > 0) {
+          console.log(data.dtoList)
           const fetchedMember = data.dtoList[0];
+          
           const checkOutDate = new Date(fetchedMember.checkOutTime);
+
+          setMemberList(data.dtoList);
 
           // 현재 날짜와 checkOutTime의 날짜 비교
           if (today.toDateString() !== checkOutDate.toDateString()) {
@@ -66,40 +94,63 @@ const MemberAttendanceComponent = () => {
   }, []);
 
   const goWorkClick = () => {
-    checkIn(eid)
-      .then(() => {
-        return getOneMemberAttendance(eid);
-      })
-      .then((data) => {
-        if (data.dtoList && data.dtoList.length > 0) {
-          setMember(data.dtoList[0]);
-          alert("정상출근되었습니다.");
-        } else {
-          setMember(initState);
-        }
-      })
-      .catch((error) => {
-        console.error("출근 정보 불러오기 오류:", error);
-        alert(error.response.data);
-      });
+    setModalAction('checkIn');
+    setIsModalOpen(true);
   };
 
   const leaveWorkClick = () => {
-    checkOut(eid)
-      .then(() => {
-        return getOneMemberAttendance(eid);
-      })
-      .then((data) => {
-        if (data.dtoList && data.dtoList.length > 0) {
-          setMember(data.dtoList[0]);
-          alert("정상퇴근되었습니다.");
-        } else {
-          setMember(initState);
-        }
-      })
-      .catch((error) => {
-        alert(error.response.data);
-      });
+    setModalAction('checkOut');
+    setIsModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    if (modalAction === 'checkIn') {
+      checkIn(eid)
+        .then(() => {
+          return getOneMemberAttendance(eid);
+        })
+        .then((data) => {
+          if (data.dtoList && data.dtoList.length > 0) {
+            const updatedMember = data.dtoList[0];
+            setMember(updatedMember);
+            setMemberList((prevList) => [...prevList, updatedMember]);
+            setAlertMessage("정상출근되었습니다.");
+          } else {
+            setMember(initState);
+          }
+        })
+        .catch((error) => {
+          console.error("출근 정보 불러오기 오류:", error);
+          setAlertMessage(error.response.data);
+        });
+    } else if (modalAction === 'checkOut') {
+      checkOut(eid)
+        .then(() => {
+          return getOneMemberAttendance(eid);
+        })
+        .then((data) => {
+          if (data.dtoList && data.dtoList.length > 0) {
+            const updatedMember = data.dtoList[0];
+            setMember(updatedMember);
+            setMemberList((prevList) => {
+              return prevList.map(member => 
+                member.eid === updatedMember.eid ? updatedMember : member
+              );
+            });
+            setAlertMessage("정상퇴근되었습니다.");
+          } else {
+            setMember(initState);
+          }
+        })
+        .catch((error) => {
+          setAlertMessage(error.response.data);
+        });
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -125,7 +176,20 @@ const MemberAttendanceComponent = () => {
           </button>
         </div>
       </div>
+
+      <PersonalAttendanceTable member={member} memberList={memberList}/>
+
+      <ConfirmationModal 
+        open={isModalOpen} 
+        onClose={handleClose} 
+        onConfirm={handleConfirm} 
+        title={modalAction === 'checkIn' ? "출근 확인" : "퇴근 확인"} 
+        message={modalAction === 'checkIn' ? "출근하시겠습니까?" : "퇴근하시겠습니까?"} 
+      />
+      {alertMessage && <ConfirmationModal open={!!alertMessage} onClose={() => setAlertMessage("")} onConfirm={() => setAlertMessage("")} title="알림" message={alertMessage} />}
     </div>
+
+
   );
 };
 

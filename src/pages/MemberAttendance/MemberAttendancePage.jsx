@@ -13,7 +13,6 @@ const MemberAttendancePage = () => {
      
         <BasicLayout title={title}>
           <MemberAttendanceComponent eid={eid}/>
-          <PersonalAttendanceTable eid={eid}/>
         </BasicLayout>
       );
 }
