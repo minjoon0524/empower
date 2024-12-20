@@ -17,16 +17,20 @@ const BasicMenu = () => {
     navigate('/')
   };
 
+
+
   console.log("loginState Test---------", loginState);
   return (
-    <nav className={style.container}>
+    <nav className={style.container} style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex:1}}>
       <div className={style.nav_item}>
         <a className={style.title}>Empower</a>
         <div className={style.profile_container}>
           <div className={style.user_profile}>
             <button type="button" className={style.profile_thumbnail}>
               <img
-                src="https://static.worksmobile.net/static/pwe/wm/common/ic80_nomember.png"
+             className={style.profile_thumbnail}
+                // src="https://static.worksmobile.net/static/pwe/wm/common/ic80_nomember.png"
+                    src={loginState.profileName?`http://localhost/member/profile/${loginState.profileName}`:`https://static.worksmobile.net/static/pwe/wm/common/ic80_nomember.png`}
                 width="32"
                 height="32"
                 alt="사용자 정보"
