@@ -55,7 +55,7 @@ export const getVacation = async (pageParam, eid) => {
 // 휴가 조회(휴가 번호)
 export const getMemberVacation = async (vacId) => {
   const res = await axios.get(`${API_SERVER_HOST}/vacation/${vacId}`);
-  
+
   console.log("============== 휴가 조회(휴가 번호) ============== ", res.data);
 
   return res.data;
@@ -76,6 +76,20 @@ export const updateVacation = async (vacId, vacation) => {
 export const deleteVacation = async (vacId) => {
   const res = await jwtAxios.delete(`${API_SERVER_HOST}/vacation/${vacId}`);
   console.log("============== 휴가 삭제 ============== ", res.data);
+
+  return res.data;
+};
+
+// 휴가 승인 거절 대기 별 리스트 출력
+export const getMemberVacationStatus = async (pageParam) => {
+  const { page, size, filter } = pageParam;
+  const res = await jwtAxios.get(`${API_SERVER_HOST}/vacation/status`, {
+    params: { page: page, size: size, status: filter },
+  });
+  console.log(
+    "============== 휴가 승인 거절 대기 별 리스트 출력  ============== ",
+    res.data
+  );
 
   return res.data;
 };

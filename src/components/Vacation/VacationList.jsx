@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styles from "./vacationList.module.css";
 import ReactPaginate from "react-paginate";
 import useCustomMove from "../../hooks/useCustomMove";
-import { approveVacation, getMemberVacationList } from "../../api/vacationApi";
+import { approveVacation, getMemberVacationList, getMemberVacationStatus } from "../../api/vacationApi";
 
 const Loader = lazy(() => import("../Loader/Loader"));
 // Modal 스타일 설정
@@ -52,21 +52,29 @@ const VacationList = () => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+  const [filter, setFilter] = useState("ALL");
 
   const handlePageClick = ({ selected }) => {
     moveToVacationList({ page: selected + 1, size });
   };
 
+  // 전체일 경우, getMemberVacationList
+  // 대기, 승인, 거절 일 경우, getMemberVacationStatus
   useEffect(() => {
-    getMemberVacationList({ page, size })
-      .then((data) => {
-        console.log(data);
+    const fetchData = async () => {
+      try {
+        const data = filter === "ALL"
+          ? await getMemberVacationList({ page, size })
+          : await getMemberVacationStatus({ page, size, filter });
+        
         setServerData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching vacation list:", error);
-      });
-  }, [page, size, refresh]);
+      } catch (error) {
+        console.error("휴가 목록 조회 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, [page, size, refresh, filter]);
 
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -204,7 +212,7 @@ const VacationList = () => {
     }
   };
 
-  const [filter, setFilter] = useState("ALL");
+
 
   const filteredData = serverData.dtoList.filter((item) => {
     if (filter === "ALL") return true;
