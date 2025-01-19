@@ -24,40 +24,7 @@ const  MemberAttendance=lazy(() =>import("../pages/MemberAttendance/MemberAttend
 
 const attendanceRouter = () => {
   return [
-    // {
-    //   path: "login",
-    //   element: (
-    //     <Suspense fallback={Loading}>
-    //       <Login />
-    //     </Suspense>
-    //   ),
-    // },
-    // {
-    //   path: "search",
-    //   element: (
-    //     <Suspense fallback={Loading}>
-    //       <Search />
-    //     </Suspense>
-    //   ),
-    // },
-    // {
-    //   path: "read/:eid",
-    //   element: (
-    //     <Suspense fallback={Loading}>
-    //       <Read/>
-    //     </Suspense>
-    //   ),
-    // },
-    
 
-    // {
-    //     path: "modify/:eid",
-    //     element: (
-    //       <Suspense fallback={Loading}>
-    //         <UpdateMember />
-    //       </Suspense>
-    //     ),
-    //   },
       {
         path: "read",
         element: (
