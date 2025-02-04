@@ -4,6 +4,7 @@ import useCustomMove from "../../../hooks/useCustomMove";
 import { getMemberList } from "../../../api/memberApi";
 import ReactPaginate from "react-paginate";
 import JoinComponent from "../../Join/JoinComponent"; // JoinComponent 임포트
+import useCustomLogin from "../../../hooks/useCustomLogin";
 
 const initState = {
   dtoList: [],
@@ -25,7 +26,7 @@ const MemberSearchComponent = () => {
   const [searchField, setSearchField] = useState("name"); // 검색 옵션
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 상태 추가
-
+  const {loginState}=useCustomLogin()
   useEffect(() => {
     fetchMembers();
   }, [page, size, refresh]);
@@ -84,10 +85,10 @@ const MemberSearchComponent = () => {
             <a className={style.search_btn} onClick={handleSearch}>
               검색
             </a>{" "}
-
-            <a className={style.add_person_btn} onClick={openModal}>
+            {loginState?.roleNames[0] === "ADMIN" ? (<a className={style.add_person_btn} onClick={openModal}>
             사원추가
-          </a>
+          </a>):("")}
+        
             {/* 검색 버튼 클릭 시 검색 */}
           </div>
         </div>
