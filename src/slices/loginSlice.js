@@ -7,16 +7,12 @@ const initState = {
   employeeNumber: "",
 };
 // 로그인 상태를 위한 쿠키 함수
-const loadMemberCookie = () => {
-  //쿠키에서 로그인 정보 로딩
-  const memberInfo = getCookie("member");
-  //닉네임 처리
-  // if (memberInfo && memberInfo.nickname) {
-  //   memberInfo.nickname = decodeURIComponent(memberInfo.nickname);
-  // }
-  return memberInfo;
-};
+const loadMemberCookie = () => {  //쿠키에서 로그인 정보 로딩 
 
+  const memberInfo =  getCookie("member")
+
+  return memberInfo
+}
 // param은 employeeNumber,pw를 가지고 있다.
 export const loginPostAsync = createAsyncThunk("loginPostAsync", (param) =>
     loginPost(param)
@@ -44,9 +40,11 @@ const loginSlice = createSlice({
       removeCookie("member");
       return { ...initState };
     },
-  },
+  }, 
   // createAsyncThunk 사용을 위해
+  
   extraReducers: (builder) => {
+    const memberCookieValue = getCookie("member");
     builder
         .addCase(loginPostAsync.fulfilled, (state, action) => {
           console.log("fulfilled");
@@ -54,11 +52,12 @@ const loginSlice = createSlice({
           console.log(payload)
 
           if (!payload.error) {
-            setCookie("member", JSON.stringify(payload)); //1일
+            setCookie("member", JSON.stringify(payload),1); //1일
+            console.log(memberCookieValue)
           }
-          return payload;
-          // 다음 상태로 유지되어야 할 값
-          return payload;
+
+           return payload
+   
         })
 
         .addCase(loginPostAsync.pending, (state, action) => {
